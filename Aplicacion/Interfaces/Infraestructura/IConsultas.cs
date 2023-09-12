@@ -1,4 +1,5 @@
-﻿using Dominio;
+﻿using Aplicacion.Casos_de_usos;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace Aplicación.Interfaces.Infraestructura
 {
     public interface IConsultas
     {
-        List<Funciones> ListarFunciones();
+        List<Cartelera> ListarFunciones();
         List<Peliculas> ListarPeliculas();
+        List<Salas> ListarSalas();
     }
 }

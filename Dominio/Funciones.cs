@@ -10,7 +10,7 @@ namespace Dominio
 {
     public class Funciones
     {
-        public int FuncionesId { get; set; } //Manejar excepciones no nulas
+        public int FuncionesId { get; set; } 
         public int PeliculaId { get; set; } 
         public int SalaId { get; set; }
         public DateTime Fecha { get; set; }
