@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(Contexto_Cine))]
-    [Migration("20230912041421_v1")]
+    [Migration("20230912051326_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -42,8 +42,8 @@ namespace Infraestructura.Migrations
                     b.Property<int>("SalaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Tiempo")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("Tiempo")
+                        .HasColumnType("time");
 
                     b.HasKey("FuncionesId");
 

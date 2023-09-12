@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Aplicacion.Casos_de_usos
 {
@@ -36,16 +37,16 @@ namespace Aplicacion.Casos_de_usos
             };
             var IDSala = int.Parse(Console.ReadLine());
             Console.WriteLine("Fecha");
-            var dia=DateTime.Parse(Console.ReadLine());
+            var dia=DateTime.Parse(Console.ReadLine()).Date;
             Console.WriteLine("Hora");
-            var hora=DateTime.Parse(Console.ReadLine());
+            var hora=DateTime.Parse(Console.ReadLine()).TimeOfDay;
             
-            var Funcion = new Funciones
+            var Funcion = new Funciones //Estaría mal por un principio Solid
             {
                 PeliculaId = IDPeli,
                 SalaId = IDSala,
-                Fecha = dia, //TOSHORTTIMESTRING
-                Tiempo = hora, //TOSHORTDATESTRING
+                Fecha = dia, 
+                Tiempo = hora, 
             };
             _Agregar.AgregarFuncion(Funcion); 
         }
@@ -75,13 +76,13 @@ namespace Aplicacion.Casos_de_usos
 
         List<Cartelera> FiltrarFunciones(List<Cartelera> carteleras,bool controlador)
         {
-            Console.WriteLine("Por favor, ingrese la fecha en la cual desea conocer las funciones");
+            Console.WriteLine("Por favor, ingrese la fecha en la cual desea conocer las funciones " + "\n");
             var respuesta = "no";
             var func = DateTime.Parse(Console.ReadLine());
             var Funciones = carteleras.Where(p => p.Fecha == func).ToList();
             if (!controlador)
             {
-                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + func + "\n");
+                Console.WriteLine("¿Desea conocer todas las funciones de una determinada pelicula para el día " + func.Date.ToShortDateString() + "?\n");
                 respuesta = Console.ReadLine().ToLower();
                 controlador = true;
             }
@@ -97,13 +98,13 @@ namespace Aplicacion.Casos_de_usos
 
         private List<Cartelera> FiltrarPelicula(List<Cartelera> carteleras,bool controlador)
         {
-            Console.WriteLine("Por favor, ingrese el nombre de la pelicula");
+            Console.WriteLine("Por favor, ingrese el nombre de la pelicula " + "\n");
             var respuesta = "";
             var peli = Console.ReadLine().ToUpper();
             var Peliculas = carteleras.Where(p => p.Titulo == peli).ToList();
             if (!controlador)
             {
-                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + peli + "\n");
+                Console.WriteLine("¿Desea conocer todas las funciones en una fecha en especifica para la pelicula " + peli + "?\n");
                 respuesta = Console.ReadLine().ToLower();
                 controlador = true;
             }
@@ -121,11 +122,11 @@ namespace Aplicacion.Casos_de_usos
         {
             if (imprimir.Count()==0)
             {
-                Console.WriteLine("Lo sentimos, no hay funciones de esa pelicula:(");
+                Console.WriteLine("Lo sentimos, no hay funciones de esa pelicula  :(  ");
             }
             foreach (var func in imprimir)
             {
-                Console.WriteLine("Pelicula: " + func.Titulo + "\n" + "Género: " + func.genero + "\n" + "Poster: " + func.Poster + "\n" + "Sinopsis: " + func.Sinopsis + "\n" + "Trailer: " + func.Trailer + "\n" + "Fecha: " + func.Fecha.ToString() + "\n" + "Hora: " + func.Hora.ToString() + "\n" + "Sala: " + func.Sala + "\n" + "Capacidad: " + func.Capacidad + "\n");
+                Console.WriteLine("Pelicula: " + func.Titulo + "\n" + "Género: " + func.genero + "\n" + "Poster: " + func.Poster + "\n" + "Sinopsis: " + func.Sinopsis + "\n" + "Trailer: " + func.Trailer + "\n" + "Fecha: " + func.Fecha.Date.ToShortDateString() + "\n" + "Hora: " + func.Hora.ToString() + "\n" + "Sala: " + func.Sala + "\n" + "Capacidad: " + func.Capacidad + "\n");
             }
         }
     }

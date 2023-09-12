@@ -14,7 +14,7 @@ namespace Dominio
         public int PeliculaId { get; set; } 
         public int SalaId { get; set; }
         public DateTime Fecha { get; set; }
-        public DateTime Tiempo { get; set; }
+        public TimeSpan Tiempo { get; set; }
         public Peliculas Peliculas { get; set; }
         public ICollection<Tickets> Tickets { get; set; }
         public Salas Salas { get; set; }   

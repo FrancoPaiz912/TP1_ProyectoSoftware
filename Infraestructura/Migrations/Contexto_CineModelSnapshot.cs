@@ -39,8 +39,8 @@ namespace Infraestructura.Migrations
                     b.Property<int>("SalaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Tiempo")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("Tiempo")
+                        .HasColumnType("time");
 
                     b.HasKey("FuncionesId");
 
