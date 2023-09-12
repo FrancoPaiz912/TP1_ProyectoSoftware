@@ -81,7 +81,7 @@ namespace Aplicacion.Casos_de_usos
             var Funciones = carteleras.Where(p => p.Fecha == func).ToList();
             if (!controlador)
             {
-                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + func);
+                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + func + "\n");
                 respuesta = Console.ReadLine().ToLower();
                 controlador = true;
             }
@@ -103,7 +103,7 @@ namespace Aplicacion.Casos_de_usos
             var Peliculas = carteleras.Where(p => p.Titulo == peli).ToList();
             if (!controlador)
             {
-                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + peli);
+                Console.WriteLine("Desea conocer todas las funciones de una determinada pelicula para el día " + peli + "\n");
                 respuesta = Console.ReadLine().ToLower();
                 controlador = true;
             }
@@ -125,7 +125,7 @@ namespace Aplicacion.Casos_de_usos
             }
             foreach (var func in imprimir)
             {
-                Console.WriteLine("Pelicula: " + func.Titulo + "\n" + "Poster: " + func.Poster + "\n" + "Sinopsis: " + func.Sinopsis + "\n" + "Trailer: " + func.Trailer + "\n" + "Fecha: " + func.Fecha.ToString() + "\n" + "Hora: " + func.Hora.ToString() + "\n" + "Sala: " + func.Sala + "\n" + "Capacidad: " + func.Capacidad + "\n");
+                Console.WriteLine("Pelicula: " + func.Titulo + "\n" + "Género: " + func.genero + "\n" + "Poster: " + func.Poster + "\n" + "Sinopsis: " + func.Sinopsis + "\n" + "Trailer: " + func.Trailer + "\n" + "Fecha: " + func.Fecha.ToString() + "\n" + "Hora: " + func.Hora.ToString() + "\n" + "Sala: " + func.Sala + "\n" + "Capacidad: " + func.Capacidad + "\n");
             }
         }
     }

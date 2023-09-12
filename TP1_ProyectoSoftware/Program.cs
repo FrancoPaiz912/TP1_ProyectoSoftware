@@ -11,7 +11,8 @@ class Program
     {
         
         IServiciosFunciones funcion = new ServiciosFunciones(new Consulta_Funcion(new Contexto_Cine()), new InsertarFuncion(new Contexto_Cine()));
-        Console.WriteLine("Bievenido al Cine \n por favor escoja que desea hacer \n1. Listar funciones \n2. Ingresar película ");
+        Console.WriteLine("Bievenido al Cine \n por favor escoja que desea hacer \n1. Listar funciones \n2. Ingresar función ");
+
         try
         {
             int opcion = int.Parse(Console.ReadLine());
@@ -28,10 +29,16 @@ class Program
                     Console.WriteLine("Opción equivocada, escoga una de las anteriores");
                     break;
             }
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine("No seas pelotudo");
         }
+
+    }
+
+    static void Opciones()
+    {
 
     }
 }

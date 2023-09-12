@@ -16,7 +16,6 @@ namespace Aplicacion.Casos_de_usos
         public int Capacidad { get; set; }
         public DateTime Fecha { get; set; }
         public DateTime Hora { get; set; }
-
-        //Falto genero
+        public string genero { get; set; }
     }
 }

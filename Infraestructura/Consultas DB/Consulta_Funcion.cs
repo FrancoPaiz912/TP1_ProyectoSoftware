@@ -25,6 +25,7 @@ namespace Infraestructura.Querys
             return (from Funciones in _Contexto.Funciones
                    join Peliculas in _Contexto.Peliculas on Funciones.PeliculaId equals Peliculas.Peliculasid
                    join Salas in _Contexto.Salas on Funciones.SalaId equals Salas.SalasId
+                   join Genero in _Contexto.Generos on Peliculas.Genero equals Genero.GenerosId
                    select new Cartelera
                    {
                        Titulo = Peliculas.Titulo,
@@ -34,7 +35,8 @@ namespace Infraestructura.Querys
                        Sala = Salas.Nombre,
                        Capacidad = Salas.Capacidad,
                        Fecha = Funciones.Fecha,
-                       Hora = Funciones.Tiempo
+                       Hora = Funciones.Tiempo,
+                       genero = Genero.Nombre,
                    }).ToList();
         }
 
