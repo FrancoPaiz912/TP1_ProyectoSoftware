@@ -27,76 +27,24 @@ namespace Aplicacion.Casos_de_usos
 
         void IServiciosFunciones.IntroducirFuncion()
         {
-            int IDPeli = 0,IDSala = 0;
-            DateTime dia = DateTime.Parse("12/12/1212");
-            TimeSpan hora = DateTime.Parse("00:00:00").TimeOfDay;
             var iterador = true;
             Console.WriteLine("Por favor escoja la funcion a añadir de acuerdo a los siguientes parametros: \nID de Pelicula");
             foreach (var Peli in _consultas.ListarPeliculas())
             {
                 Console.WriteLine("ID: " + Peli.Peliculasid + "    - Titulo de la Pelicula: " + Peli.Titulo);
             };
-            while (iterador)
-            {
-                try
-                {
-                    IDPeli = int.Parse(Console.ReadLine());
-                    iterador = false;
-                    if (IDPeli>_consultas.ListarPeliculas().Count())
-                    {
-                        throw new PeliculaInexistenteException("El ID ingresado, no se encuentra asociado a ninguna pelicula, por favor ingrese uno válido");
-                    }
-                }
-                catch (PeliculaInexistenteException)
-                {
-                    iterador = true;
-                }
-            }
-            iterador = true;
+            var IDPeli=InspeccionId(iterador,"pelicula");
             Console.WriteLine("ID de la sala");
             foreach (var sala in _consultas.ListarSalas())
             {
                 Console.WriteLine("ID:" + sala.SalasId + "    - Nombre de la sala: " + sala.Nombre + "            - Capacidad: " + sala.Capacidad);
             };
-            while (iterador)
-            {
-                try
-                {
-                    IDSala = int.Parse(Console.ReadLine());
-                    iterador = false;
-                    if (IDSala > _consultas.ListarSalas().Count())
-                    {
-                        throw new PeliculaInexistenteException("El ID ingresado, no se encuentra asociado a ninguna Sala, por favor ingrese uno válido");
-                    }
-                }
-                catch (PeliculaInexistenteException)
-                {
-                    iterador = true;
-                }
-            }
+            int IDSala=InspeccionId(iterador, "sala");
             iterador = true;
             Console.WriteLine("Fecha");
-            while (iterador)
-            {
-                try
-                {
-                    dia = DateTime.Parse(Console.ReadLine()).Date;
-                    iterador = false;
-                    if (IDSala > _consultas.ListarSalas().Count())
-                    {
-                        throw new PeliculaInexistenteException("El ID ingresado, no se encuentra asociado a ninguna Sala, por favor ingrese uno válido");
-                    }
-                }
-                catch (PeliculaInexistenteException)
-                {
-                    iterador = true;
-                }
-            }
-           
-            
+            var dia = InspeccionTiempoYHora(iterador).Date;
             Console.WriteLine("Hora");
-            hora=DateTime.Parse(Console.ReadLine()).TimeOfDay;
-            
+            var hora = InspeccionTiempoYHora(iterador).TimeOfDay;
             var Funcion = new Funciones 
             {
                 PeliculaId = IDPeli,
@@ -107,9 +55,50 @@ namespace Aplicacion.Casos_de_usos
             _Agregar.AgregarFuncion(Funcion); 
         }
 
-        private void InspeccionDeDatos()
+        private int InspeccionId(bool iterador,string tipo)
         {
+            var ID = 0;
+            while (iterador)
+            {
+                try
+                {
+                    ID = int.Parse(Console.ReadLine());
+                    iterador = false;
+                    if (tipo=="pelicula" && (ID > _consultas.ListarPeliculas().Count() || ID==0))
+                    {
+                        throw new IDInexistenteException("El ID ingresado no se encuentra asociado a ninguna "+ tipo +", por favor ingrese uno válido");
+                    } else if (tipo=="sala" && (ID > _consultas.ListarSalas().Count() || ID == 0))
+                    {
+                        throw new IDInexistenteException("El ID ingresado no se encuentra asociado a ninguna " + tipo +", por favor ingrese uno válido");
+                    }
+                }
+                catch (IDInexistenteException)
+                {
+                    iterador = true;
+                }
+            }
+            return ID;
+        }
 
+        private DateTime InspeccionTiempoYHora(bool iterador)
+        {
+            DateTime tiempo = DateTime.Parse("12/12/1212");
+            while (iterador)
+            {
+                try
+                {
+                    tiempo = DateTime.Parse(Console.ReadLine());
+                    iterador = false;
+                }
+                catch (FormatException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Ingrese un formato adecuado");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    iterador = true;
+                }
+            }
+            return tiempo;
         }
 
         void IServiciosFunciones.ObtenerFunciones()
@@ -148,18 +137,7 @@ namespace Aplicacion.Casos_de_usos
         {
             Console.WriteLine("Por favor, ingrese la fecha en la cual desea conocer las funciones (En formato dd/mm ó ingresando los dias en formato numerico y los meses en texto)\n");
             var respuesta = "no";
-            var func =DateTime.Parse("12/12/1212");
-            try
-            {
-                func = DateTime.Parse(Console.ReadLine());
-            }catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error!! Debe de ingresar una fecha correcta \n");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("Ingrese la fecha nuevamente");
-                func = DateTime.Parse(Console.ReadLine());
-            }
+            var func = InspeccionTiempoYHora(true);
             var Funciones = carteleras.Where(p => p.Fecha == func).ToList();
             if (!controlador)
                 {
@@ -185,15 +163,15 @@ namespace Aplicacion.Casos_de_usos
             try
             {
                 peli = Console.ReadLine().ToUpper();
-                if (ulong.Parse(peli).GetType() != "".GetType())
+                if (int.Parse(peli).GetType() != "".GetType())
                 {
                     throw new ExceptionString("El nombre ingresado tiene solamente números, de ser correcto el nombre de la película por favor vuelva a ingresarlo");
                 }
             }catch (ExceptionString ex) {
                 Console.WriteLine("Ingreselo nuevamente \n");
                 peli = Console.ReadLine().ToUpper();
-            }
-            var Peliculas = carteleras.Where(p => p.Titulo == peli).ToList();
+            }catch (Exception){}
+            var Peliculas = carteleras.Where(p => p.Titulo.Contains(peli)).ToList();
             if (!controlador)
             {
                 Console.WriteLine("¿Ingrese 'si' para conocer todas las funciones en una fecha en especifica para la pelicula " + peli + "?\n");
@@ -214,7 +192,9 @@ namespace Aplicacion.Casos_de_usos
         {
             if (imprimir.Count()==0)
             {
-                Console.WriteLine("Lo sentimos, no hay funciones de esa pelicula  :(  \n");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Lo sentimos, no hay funciones en ese día :(  \n");
+                Console.ForegroundColor = ConsoleColor.Cyan;
             }
             foreach (var func in imprimir)
             {

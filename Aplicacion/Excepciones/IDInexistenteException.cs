@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Excepciones
 {
-    public class PeliculaInexistenteException : Exception
+    public class IDInexistenteException : Exception
     {
-        public PeliculaInexistenteException(string mensaje): base(mensaje) 
+        public IDInexistenteException(string mensaje): base(mensaje) 
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(mensaje);

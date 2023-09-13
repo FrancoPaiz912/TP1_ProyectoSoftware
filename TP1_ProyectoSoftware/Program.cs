@@ -54,15 +54,16 @@ class Program
                     Console.WriteLine("Opción incorrecta, escoga una de las opciones brindadas por el sistema. \n");
                     break;
                 }
-            }catch (FormatException)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica válida\n");
-        }catch (OverflowException)
+            }catch (OverflowException)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica válida \n");
         }
-            return true;
+        catch (FormatException)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica válida\n");
+        }
+        return true;
     }
 }
