@@ -34,17 +34,21 @@ namespace Aplicacion.Casos_de_usos
                 Console.WriteLine("ID: " + Peli.Peliculasid + "    - Titulo de la Pelicula: " + Peli.Titulo);
             };
             var IDPeli=InspeccionId(iterador,"pelicula");
+            Console.Clear();
             Console.WriteLine("ID de la sala");
             foreach (var sala in _consultas.ListarSalas())
             {
                 Console.WriteLine("ID:" + sala.SalasId + "    - Nombre de la sala: " + sala.Nombre + "            - Capacidad: " + sala.Capacidad);
             };
             int IDSala=InspeccionId(iterador, "sala");
+            Console.Clear();
             iterador = true;
             Console.WriteLine("Fecha");
             var dia = InspeccionTiempoYHora(iterador).Date;
+            Console.Clear();
             Console.WriteLine("Hora");
             var hora = InspeccionTiempoYHora(iterador).TimeOfDay;
+            Console.Clear();
             var Funcion = new Funciones 
             {
                 PeliculaId = IDPeli,
@@ -103,6 +107,7 @@ namespace Aplicacion.Casos_de_usos
 
         void IServiciosFunciones.ObtenerFunciones()
         {
+            Console.Clear();
             var funciones = _consultas.ListarFunciones();
             
             Console.WriteLine("En este apartado podrás conocer las proximas funciones para determinada pelicula, para un determinado día o , en caso de desearlo, las funciones de una pelicula para un día en especifico. \n");
@@ -135,6 +140,7 @@ namespace Aplicacion.Casos_de_usos
 
         List<Cartelera> FiltrarFunciones(List<Cartelera> carteleras,bool controlador)
         {
+            Console.Clear();
             Console.WriteLine("Por favor, ingrese la fecha en la cual desea conocer las funciones (En formato dd/mm ó ingresando los dias en formato numerico y los meses en texto)\n");
             var respuesta = "no";
             var func = InspeccionTiempoYHora(true);
@@ -157,6 +163,7 @@ namespace Aplicacion.Casos_de_usos
 
         private List<Cartelera> FiltrarPelicula(List<Cartelera> carteleras,bool controlador)
         {
+            Console.Clear();
             Console.WriteLine("Por favor, ingrese el nombre de la pelicula \n");
             var respuesta = "";
             var peli = "";
@@ -190,6 +197,7 @@ namespace Aplicacion.Casos_de_usos
 
         private void ImprimirFunciones(List<Cartelera> imprimir)
         {
+            Console.Clear();
             if (imprimir.Count()==0)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
