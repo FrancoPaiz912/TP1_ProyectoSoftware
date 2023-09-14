@@ -1,11 +1,6 @@
 ﻿using Aplicación.Interfaces.Infraestructura;
 using Dominio;
 using Infraestructura.EstructuraDB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructura.Inserts
 {
@@ -18,7 +13,7 @@ namespace Infraestructura.Inserts
             _Contexto = contexto;
         }
 
-        void IAgregar.AgregarFuncion(Funciones funcion)
+        void IAgregar.AlmacenarFuncion(Funciones funcion)
         {
             _Contexto.Add(funcion);
             _Contexto.SaveChanges();

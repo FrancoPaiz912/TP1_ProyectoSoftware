@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aplicacion.Casos_de_usos
+﻿namespace Aplicacion.Casos_de_usos
 {
     public class Cartelera
     {

@@ -1,17 +1,9 @@
-﻿using Aplicacion.Casos_de_usos;
-using Dominio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aplicacion.Interfaces.Aplicacion
+﻿namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IServiciosFunciones
     {
-        void ObtenerFunciones();
-        void IntroducirFuncion();
+        void ConsultarFunciones();
+        void RegistrarFuncion();
 
     }
 }

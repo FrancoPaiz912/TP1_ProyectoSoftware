@@ -4,8 +4,6 @@ using Aplicación.Interfaces.Infraestructura;
 using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
-using Microsoft.Extensions.Options;
-using System;
 
 class Program
 {
@@ -13,7 +11,7 @@ class Program
     {
         IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
         IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
-        IServiciosFunciones funcion = new ServiciosFunciones(Querys, Inserts);
+        IServiciosFunciones Servicio = new ServiciosFunciones(Querys, Inserts);
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();
@@ -21,8 +19,7 @@ class Program
         var continuar = true;
         while (continuar)
         {
-            
-            continuar =Menú(funcion);
+            continuar =Menú(Servicio);
             if (continuar)
             {
                 continuar = true; 
@@ -30,20 +27,20 @@ class Program
         }
     }
 
-    static bool Menú(IServiciosFunciones funcion)
+    static bool Menú(IServiciosFunciones Servicio)
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("Por favor escoja que desea hacer \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
+        Console.WriteLine("Por favor escoja que desea hacer ingresando el número correspondiente \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
         try
         {
-            int opcion = int.Parse(Console.ReadLine());
-            switch (opcion)
+            int eleccion = int.Parse(Console.ReadLine());
+            switch (eleccion)
             {
                 case 1:
-                    funcion.ObtenerFunciones();
+                    Servicio.ConsultarFunciones();
                     break;
                 case 2:
-                    funcion.IntroducirFuncion();
+                    Servicio.RegistrarFuncion();
                     Console.WriteLine("Funcion programada con exito. \n");
                     break;
                 case 3:
@@ -62,7 +59,7 @@ class Program
         catch (FormatException)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica válida\n");
+            Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica\n");
         }
         return true;
     }
