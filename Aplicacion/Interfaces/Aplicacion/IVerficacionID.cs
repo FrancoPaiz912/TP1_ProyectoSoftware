@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Interfaces.Aplicacion
 {
-    public interface IVerficacionID : Iverificación
+    public interface IVerficacionID 
     {
         int Verificacion(bool iterador, string tipo);
     }
