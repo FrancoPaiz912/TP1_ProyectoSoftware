@@ -4,14 +4,18 @@ using Aplicación.Interfaces.Infraestructura;
 using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 class Program
 {
     public static void Main(string[] args)
     {
+        //IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
+        //IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
+        //IServiciosFunciones Servicio = new ServiciosFunciones(Querys, Inserts);
         IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
-        IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
-        IServiciosFunciones Servicio = new ServiciosFunciones(Querys, Inserts);
+        IAgregar Inserts = new Insertar_Funcion(new Contexto_Cine());
+
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();
@@ -19,16 +23,18 @@ class Program
         var continuar = true;
         while (continuar)
         {
-            continuar =Menú(Servicio);
+            continuar =Menú(Querys, Inserts);
             if (continuar)
             {
-                continuar = true; 
+                continuar = true;
             }
         }
     }
 
-    static bool Menú(IServiciosFunciones Servicio)
+    static bool Menú(IConsultas Querys, IAgregar Inserts)
     {
+        IAgregarFunciones Agregar = new AgregarFunciones(Querys, Inserts);
+        IListarFunciones Listar = new ListarFunciones(Querys);
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("Por favor escoja que desea hacer ingresando el número correspondiente \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
         try
@@ -37,10 +43,10 @@ class Program
             switch (eleccion)
             {
                 case 1:
-                    Servicio.ConsultarFunciones();
+                    Listar.ConsultarFunciones();
                     break;
                 case 2:
-                    Servicio.RegistrarFuncion();
+                    Agregar.RegistrarFuncion();
                     Console.WriteLine("Funcion programada con exito. \n");
                     break;
                 case 3:
