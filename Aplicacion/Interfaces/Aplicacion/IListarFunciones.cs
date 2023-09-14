@@ -8,6 +8,6 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IListarFunciones
     {
-        void ConsultarFunciones();
+        void ConsultarFunciones(IFiltrarFunciones Funciones, IFiltrarPeliculas peliculas, IVerificacionTemporal verificador);
     }
 }

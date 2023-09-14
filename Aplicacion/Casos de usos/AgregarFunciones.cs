@@ -15,7 +15,7 @@ namespace Aplicacion.Casos_de_usos
             _Agregar = Agregar;
         }
 
-        void IAgregarFunciones.RegistrarFuncion()
+        void IAgregarFunciones.RegistrarFuncion(IVerficacionID verificador_Id, IVerificacionTemporal verificador_Temp)
         {
             var iterador = true;
             Console.WriteLine("Por favor escoja la funcion a añadir de acuerdo a los siguientes parametros: \nID de Pelicula \n");
@@ -23,21 +23,21 @@ namespace Aplicacion.Casos_de_usos
             {
                 Console.WriteLine("ID: " + Peli.Peliculasid + "         - Titulo de la Pelicula: " + Peli.Titulo);
             };
-            var IDPeli = VerificacionId(iterador, "pelicula");
+            var IDPeli = verificador_Id.Verificacion(iterador, "pelicula");
             Console.Clear();
             Console.WriteLine("ID de la sala \n");
             foreach (var sala in _consultas.ListarSalas())
             {
                 Console.WriteLine("ID:" + sala.SalasId + "    - Nombre de la sala: " + sala.Nombre + "            - Capacidad: " + sala.Capacidad);
             };
-            int IDSala = VerificacionId(iterador, "sala");
+            int IDSala = verificador_Id.Verificacion(iterador, "sala");
             Console.Clear();
             iterador = true;
             Console.WriteLine("Fecha \nFormato: dd/mm ó día en forma numerica y mes en texto (EJ: 12 de Septiembre) \n");
-            var dia = VerificacionTemporal(iterador).Date;
+            var dia = verificador_Temp.Verificacion(iterador).Date;
             Console.Clear();
             Console.WriteLine("Hora \nFormato: hh:mm ó hora am/pm según se requiera \n");
-            var hora = VerificacionTemporal(iterador).TimeOfDay;
+            var hora = verificador_Temp.Verificacion(iterador).TimeOfDay;
             Console.Clear();
             var Funcion = new Funciones
             {
@@ -47,65 +47,6 @@ namespace Aplicacion.Casos_de_usos
                 Tiempo = hora,
             };
             _Agregar.AlmacenarFuncion(Funcion);
-        }
-
-        private int VerificacionId(bool iterador, string tipo)
-        {
-            var ID = 0;
-            while (iterador)
-            {
-                try
-                {
-                    ID = int.Parse(Console.ReadLine());
-                    iterador = false;
-                    if (tipo == "pelicula" && (ID > _consultas.ListarPeliculas().Count() || ID == 0))
-                    {
-                        throw new IDInexistenteException("El ID ingresado no se encuentra asociado a ninguna " + tipo + ", por favor ingrese uno válido \n");
-                    }
-                    else if (tipo == "sala" && (ID > _consultas.ListarSalas().Count() || ID == 0))
-                    {
-                        throw new IDInexistenteException("El ID ingresado no se encuentra asociado a ninguna " + tipo + ", por favor ingrese uno válido \n");
-                    }
-                }
-                catch (IDInexistenteException)
-                {
-                    iterador = true;
-                }
-                catch (FormatException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Por favor, ingrese el valor en un formato numerico \n");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                }
-                catch (OverflowException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Por favor, ingrese un valor númerico coherente \n");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                }
-            }
-            return ID;
-        }
-
-        private DateTime VerificacionTemporal(bool iterador)
-        {
-            DateTime tiempo = DateTime.Parse("12/12/1212");
-            while (iterador)
-            {
-                try
-                {
-                    tiempo = DateTime.Parse(Console.ReadLine());
-                    iterador = false;
-                }
-                catch (FormatException)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Ingrese un formato adecuado \n");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    iterador = true;
-                }
-            }
-            return tiempo;
         }
     }
 }

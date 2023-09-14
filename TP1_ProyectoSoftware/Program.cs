@@ -1,9 +1,11 @@
-﻿using Aplicacion.Casos_de_usos;
+﻿using Aplicacion;
+using Aplicacion.Casos_de_usos;
 using Aplicacion.Interfaces.Aplicacion;
 using Aplicación.Interfaces.Infraestructura;
 using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
+using System.Net.Http.Headers;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 class Program
@@ -33,8 +35,11 @@ class Program
 
     static bool Menú(IConsultas Querys, IAgregar Inserts)
     {
+        IImprimir impresor = new ImprimirFunciones();
         IAgregarFunciones Agregar = new AgregarFunciones(Querys, Inserts);
-        IListarFunciones Listar = new ListarFunciones(Querys);
+        IListarFunciones Listar = new ListarFunciones(Querys, impresor);
+        IVerificacionTemporal Verificador_Tiempo = new VerificacionTemporal();
+        IVerficacionID Verificador_ID = new VerificacionId(Querys);
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("Por favor escoja que desea hacer ingresando el número correspondiente \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
         try
@@ -43,10 +48,12 @@ class Program
             switch (eleccion)
             {
                 case 1:
-                    Listar.ConsultarFunciones();
+                    IFiltrarFunciones filtroFuncion = new FiltrarFuncion(new FiltrarPelicula(),Verificador_Tiempo);
+                    IFiltrarPeliculas filtroPelicula = new FiltrarPelicula(new FiltrarFuncion(new FiltrarPelicula(), Verificador_Tiempo));
+                    Listar.ConsultarFunciones(filtroFuncion,filtroPelicula,Verificador_Tiempo);
                     break;
                 case 2:
-                    Agregar.RegistrarFuncion();
+                    Agregar.RegistrarFuncion(Verificador_ID, Verificador_Tiempo);
                     Console.WriteLine("Funcion programada con exito. \n");
                     break;
                 case 3:

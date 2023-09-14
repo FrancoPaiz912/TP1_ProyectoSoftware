@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Interfaces.Aplicacion
 {
-    public interface IAgregarFunciones
+    public interface IVerificacionTemporal : Iverificación
     {
-        void RegistrarFuncion(IVerficacionID verificador1, IVerificacionTemporal verificador2);
+        DateTime Verificacion(bool iterador);
     }
 }
