@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IListarFunciones
     {
-        void ConsultarFunciones(IFiltrarFunciones Funciones, IFiltrarPeliculas peliculas, IVerificacionTemporal verificador);
+        //void ConsultarFunciones(IFiltrar Funciones, IFiltrarPeliculas peliculas, IVerificacionTemporal verificador);
+        Task<List<Peliculas>> GetPeliculas();
+        Task<List<Salas>> GetSalas();
     }
 }

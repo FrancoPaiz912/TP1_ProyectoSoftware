@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Casos_de_usos
+/*namespace Aplicacion.Casos_de_usos
 {
-    public class ImprimirFunciones :IImprimir
+    public class ImprimirFunciones :IImprimir //NO SE USA
     {
         void IImprimir.Imprimir(List<Cartelera> imprimir)
         {
@@ -24,4 +24,4 @@ namespace Aplicacion.Casos_de_usos
             }
         }
     }
-}
+}*/

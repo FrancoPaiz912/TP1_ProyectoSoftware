@@ -8,6 +8,7 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IAgregarFunciones
     {
-        void RegistrarFuncion(IVerficacionID verificador1, IVerificacionTemporal verificador2);
+        //void RegistrarFuncion(IVerficacionID verificador1, IVerificacionTemporal verificador2);
+        void RegistrarFuncion(int ID_Pelicula, int ID_Sala, DateTime Fecha, TimeSpan Horario);
     }
 }

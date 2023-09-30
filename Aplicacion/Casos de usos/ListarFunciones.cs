@@ -1,20 +1,32 @@
 ﻿using Aplicacion.Excepciones;
 using Aplicacion.Interfaces.Aplicacion;
 using Aplicación.Interfaces.Infraestructura;
+using Dominio;
 
 namespace Aplicacion.Casos_de_usos
 {
     public class ListarFunciones : IListarFunciones
     {
         private readonly IConsultas _consultas;
-        private readonly IImprimir _imprimir;
         
-        public ListarFunciones(IConsultas consultas, IImprimir imprimir)
+        public ListarFunciones(IConsultas consultas)
         {
             _consultas = consultas;
-            _imprimir = imprimir;
         }
-        void IListarFunciones.ConsultarFunciones(IFiltrarFunciones _Funciones, IFiltrarPeliculas _Peliculas, IVerificacionTemporal verificador)
+
+        async Task<List<Peliculas>> IListarFunciones.GetPeliculas()
+        {
+            return await _consultas.ListarPeliculas();
+        }
+
+        async Task<List<Salas>> IListarFunciones.GetSalas()
+        {
+            return await _consultas.ListarSalas();
+        }
+
+
+
+        /*void IListarFunciones.ConsultarFunciones(IFiltrar _Funciones, IFiltrarPeliculas _Peliculas, IVerificacionTemporal verificador)
         {
             Console.Clear();
             var funciones = _consultas.ListarFunciones();
@@ -47,6 +59,6 @@ namespace Aplicacion.Casos_de_usos
                 Filtrar = Console.ReadLine().ToLower();
             }
             Console.Clear();
-        }
+        }*/
     }
 }

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Interfaces.Aplicacion
 {
-    public interface IFiltrarFunciones
+    public interface IFiltrar
     {
-        List<Cartelera> FiltrarFunciones(List<Cartelera> carteleras, bool controlador);
+        Task<List<Cartelera>> Filtrar(string? Titulo, string? Fecha);
+
     }
 }

@@ -5,16 +5,14 @@ using Aplicación.Interfaces.Infraestructura;
 using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
+using Presentacion;
 using System.Net.Http.Headers;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
-        //IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
-        //IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
-        //IServiciosFunciones Servicio = new ServiciosFunciones(Querys, Inserts);
         IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
         IAgregar Inserts = new Insertar_Funcion(new Contexto_Cine());
 
@@ -22,24 +20,15 @@ class Program
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();
         Console.WriteLine("Bievenido al Cine \n");
-        var continuar = true;
-        while (continuar)
+        while (await Menú(Querys,Inserts))
         {
-            continuar =Menú(Querys, Inserts);
-            if (continuar)
-            {
-                continuar = true;
-            }
+            Console.Clear();
+            Console.WriteLine("Bievenido al Cine \n");
         }
     }
 
-    static bool Menú(IConsultas Querys, IAgregar Inserts)
+    static async Task<bool> Menú(IConsultas Querys, IAgregar Inserts)
     {
-        IImprimir impresor = new ImprimirFunciones();
-        IAgregarFunciones Agregar = new AgregarFunciones(Querys, Inserts);
-        IListarFunciones Listar = new ListarFunciones(Querys, impresor);
-        IVerificacionTemporal Verificador_Tiempo = new VerificacionTemporal();
-        IVerficacionID Verificador_ID = new VerificacionId(Querys);
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("Por favor escoja que desea hacer ingresando el número correspondiente \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
         try
@@ -48,12 +37,12 @@ class Program
             switch (eleccion)
             {
                 case 1:
-                    IFiltrarFunciones filtroFuncion = new FiltrarFuncion(new FiltrarPelicula(),Verificador_Tiempo);
-                    IFiltrarPeliculas filtroPelicula = new FiltrarPelicula(new FiltrarFuncion(new FiltrarPelicula(), Verificador_Tiempo));
-                    Listar.ConsultarFunciones(filtroFuncion,filtroPelicula,Verificador_Tiempo);
+                    Filtro Filtrar= new Filtro(new Filtrar(Querys));
+                    await Filtrar.RealizarFiltro();
                     break;
                 case 2:
-                    Agregar.RegistrarFuncion(Verificador_ID, Verificador_Tiempo);
+                    AgregarFuncion Add = new AgregarFuncion(new AgregarFunciones(Inserts), new ListarFunciones(Querys));
+                    await Add.AddFuncion();
                     Console.WriteLine("Funcion programada con exito. \n");
                     break;
                 case 3:

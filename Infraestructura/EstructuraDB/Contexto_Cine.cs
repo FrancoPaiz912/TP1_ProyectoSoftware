@@ -35,9 +35,9 @@ namespace Infraestructura.EstructuraDB
             modelBuilder.Entity<Funciones>(Entity =>
             {
                 Entity.ToTable("Funciones");
-                Entity.HasKey(pk => pk.FuncionesId);
-                Entity.Property(pk => pk.FuncionesId).ValueGeneratedOnAdd().IsRequired();
-                Entity.Property(a => a.Tiempo).IsRequired();
+                Entity.HasKey(pk => pk.FuncionId);
+                Entity.Property(pk => pk.FuncionId).ValueGeneratedOnAdd().IsRequired();
+                Entity.Property(a => a.Horario).IsRequired();
                 Entity.Property(a => a.Fecha).IsRequired();
                 Entity.HasOne<Peliculas>(tp => tp.Peliculas)
                 .WithMany(lt => lt.Funciones)
@@ -47,8 +47,8 @@ namespace Infraestructura.EstructuraDB
             modelBuilder.Entity<Salas>(Entity =>
             {
                 Entity.ToTable("Salas");
-                Entity.HasKey(pk => pk.SalasId);
-                Entity.Property(pk => pk.SalasId).ValueGeneratedOnAdd().IsRequired();
+                Entity.HasKey(pk => pk.SalaId);
+                Entity.Property(pk => pk.SalaId).ValueGeneratedOnAdd().IsRequired();
                 Entity.Property(a => a.Nombre).HasMaxLength(50).IsRequired();
                 Entity.Property(a => a.Capacidad).IsRequired();
                 Entity.HasMany<Funciones>(lt => lt.Funciones)
@@ -59,7 +59,7 @@ namespace Infraestructura.EstructuraDB
             modelBuilder.Entity<Tickets>(Entity =>
             {
                 Entity.ToTable("Tickets");
-                Entity.HasKey(pk => pk.TicketsId);
+                Entity.HasKey(pk => new { pk.TicketsId, pk.FuncionId });
                 Entity.Property(pk => pk.TicketsId).ValueGeneratedOnAdd().IsRequired();
                 Entity.Property(a => a.Usuario).HasMaxLength(50).IsRequired();
                 Entity.HasIndex(pk => pk.TicketsId).IsUnique();
@@ -145,19 +145,19 @@ namespace Infraestructura.EstructuraDB
                 Entity.ToTable("Salas");
                 Entity.HasData(new Salas
                 {
-                    SalasId = 1,
+                    SalaId = 1,
                     Nombre = "1",
                     Capacidad = 5
                 });
                 Entity.HasData(new Salas
                 {
-                    SalasId = 2,
+                    SalaId = 2,
                     Nombre="2",
                     Capacidad=15
                 });
                 Entity.HasData(new Salas
                 {
-                    SalasId = 3,
+                    SalaId = 3,
                     Nombre = "3",
                     Capacidad = 35
                 });

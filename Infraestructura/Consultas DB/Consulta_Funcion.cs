@@ -2,6 +2,7 @@
 using Aplicación.Interfaces.Infraestructura;
 using Dominio;
 using Infraestructura.EstructuraDB;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructura.Querys
 {
@@ -14,34 +15,23 @@ namespace Infraestructura.Querys
             _Contexto = context;
         }
 
-        List<Cartelera> IConsultas.ListarFunciones()
+        async Task<List<Funciones>> IConsultas.Filtrar(string? Titulo, string? dia)
         {
-            return (from Funciones in _Contexto.Funciones
-                   join Peliculas in _Contexto.Peliculas on Funciones.PeliculaId equals Peliculas.Peliculasid
-                   join Salas in _Contexto.Salas on Funciones.SalaId equals Salas.SalasId
-                   join Genero in _Contexto.Generos on Peliculas.Genero equals Genero.GenerosId
-                   select new Cartelera
-                   {
-                       Titulo = Peliculas.Titulo,
-                       Sinopsis = Peliculas.Sinopsis,
-                       Poster = Peliculas.Poster,
-                       Trailer = Peliculas.Trailer,
-                       Sala = Salas.Nombre,
-                       Capacidad = Salas.Capacidad,
-                       Fecha = Funciones.Fecha,
-                       Hora = Funciones.Tiempo,
-                       genero = Genero.Nombre,
-                   }).ToList();
+            return await _Contexto.Funciones.Include(s => s.Tickets)
+                .Include(s => s.Salas)
+                .Include(s => s.Peliculas)
+                .ThenInclude(s => s.Generos)
+                .Where(s => ( Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && ( dia != null ? (s.Fecha==DateTime.Parse(dia)) : true)).ToListAsync();
         }
 
-        List<Peliculas> IConsultas.ListarPeliculas()
+        async Task<List<Peliculas>> IConsultas.ListarPeliculas()
         {
-           return _Contexto.Peliculas.ToList();
+           return await _Contexto.Peliculas.ToListAsync();
         }
 
-        List<Salas> IConsultas.ListarSalas()
+        async Task<List<Salas>> IConsultas.ListarSalas()
         {
-            return _Contexto.Salas.ToList();
+            return await _Contexto.Salas.ToListAsync();
         }
     }
 }

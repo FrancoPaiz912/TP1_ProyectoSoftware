@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplicacion
+/*namespace Aplicacion
 {
-    public class VerificacionTemporal : IVerificacionTemporal
+    public class VerificacionTemporal : IVerificacionTemporal //NO SE USA
     {
         DateTime IVerificacionTemporal.Verificacion(bool iterador)
         {
@@ -30,4 +30,4 @@ namespace Aplicacion
             return tiempo;
         }
     }
-}
+}*/

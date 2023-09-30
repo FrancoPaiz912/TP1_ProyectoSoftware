@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -29,14 +30,14 @@ namespace Infraestructura.Migrations
                 name: "Salas",
                 columns: table => new
                 {
-                    SalasId = table.Column<int>(type: "int", nullable: false)
+                    SalaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Capacidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Salas", x => x.SalasId);
+                    table.PrimaryKey("PK_Salas", x => x.SalaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,16 +67,16 @@ namespace Infraestructura.Migrations
                 name: "Funciones",
                 columns: table => new
                 {
-                    FuncionesId = table.Column<int>(type: "int", nullable: false)
+                    FuncionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PeliculaId = table.Column<int>(type: "int", nullable: false),
                     SalaId = table.Column<int>(type: "int", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Tiempo = table.Column<TimeSpan>(type: "time", nullable: false)
+                    Horario = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funciones", x => x.FuncionesId);
+                    table.PrimaryKey("PK_Funciones", x => x.FuncionId);
                     table.ForeignKey(
                         name: "FK_Funciones_Peliculas_PeliculaId",
                         column: x => x.PeliculaId,
@@ -86,7 +87,7 @@ namespace Infraestructura.Migrations
                         name: "FK_Funciones_Salas_SalaId",
                         column: x => x.SalaId,
                         principalTable: "Salas",
-                        principalColumn: "SalasId",
+                        principalColumn: "SalaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -94,19 +95,18 @@ namespace Infraestructura.Migrations
                 name: "Tickets",
                 columns: table => new
                 {
-                    TicketsId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TicketsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FuncionId = table.Column<int>(type: "int", nullable: false),
                     Usuario = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tickets", x => x.TicketsId);
+                    table.PrimaryKey("PK_Tickets", x => new { x.TicketsId, x.FuncionId });
                     table.ForeignKey(
                         name: "FK_Tickets_Funciones_FuncionId",
                         column: x => x.FuncionId,
                         principalTable: "Funciones",
-                        principalColumn: "FuncionesId",
+                        principalColumn: "FuncionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -129,7 +129,7 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.InsertData(
                 table: "Salas",
-                columns: new[] { "SalasId", "Capacidad", "Nombre" },
+                columns: new[] { "SalaId", "Capacidad", "Nombre" },
                 values: new object[,]
                 {
                     { 1, 5, "1" },

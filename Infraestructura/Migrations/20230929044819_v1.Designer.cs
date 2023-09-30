@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(Contexto_Cine))]
-    [Migration("20230912051326_v1")]
+    [Migration("20230929044819_v1")]
     partial class v1
     {
         /// <inheritdoc />
@@ -27,14 +27,17 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Funciones", b =>
                 {
-                    b.Property<int>("FuncionesId")
+                    b.Property<int>("FuncionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FuncionesId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FuncionId"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("Horario")
+                        .HasColumnType("time");
 
                     b.Property<int>("PeliculaId")
                         .HasColumnType("int");
@@ -42,10 +45,7 @@ namespace Infraestructura.Migrations
                     b.Property<int>("SalaId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("Tiempo")
-                        .HasColumnType("time");
-
-                    b.HasKey("FuncionesId");
+                    b.HasKey("FuncionId");
 
                     b.HasIndex("PeliculaId");
 
@@ -346,11 +346,11 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Salas", b =>
                 {
-                    b.Property<int>("SalasId")
+                    b.Property<int>("SalaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalasId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalaId"));
 
                     b.Property<int>("Capacidad")
                         .HasColumnType("int");
@@ -360,26 +360,26 @@ namespace Infraestructura.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("SalasId");
+                    b.HasKey("SalaId");
 
                     b.ToTable("Salas", (string)null);
 
                     b.HasData(
                         new
                         {
-                            SalasId = 1,
+                            SalaId = 1,
                             Capacidad = 5,
                             Nombre = "1"
                         },
                         new
                         {
-                            SalasId = 2,
+                            SalaId = 2,
                             Capacidad = 15,
                             Nombre = "2"
                         },
                         new
                         {
-                            SalasId = 3,
+                            SalaId = 3,
                             Capacidad = 35,
                             Nombre = "3"
                         });
@@ -387,11 +387,9 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Tickets", b =>
                 {
-                    b.Property<int>("TicketsId")
+                    b.Property<Guid>("TicketsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketsId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("FuncionId")
                         .HasColumnType("int");
@@ -401,7 +399,7 @@ namespace Infraestructura.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("TicketsId");
+                    b.HasKey("TicketsId", "FuncionId");
 
                     b.HasIndex("FuncionId");
 

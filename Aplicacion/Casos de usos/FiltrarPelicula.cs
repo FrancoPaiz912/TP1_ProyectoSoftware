@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Casos_de_usos
+/*namespace Aplicacion.Casos_de_usos
 {
-    public class FiltrarPelicula : IFiltrarPeliculas
+    public class FiltrarPelicula : IFiltrarPeliculas //NO SE USA
     {
-        private readonly IFiltrarFunciones _Filtrar;
-        public FiltrarPelicula(IFiltrarFunciones Filtro)
+        private readonly IFiltrar _Filtrar;
+        public FiltrarPelicula(IFiltrar Filtro)
         {
             _Filtrar = Filtro;
         }
@@ -58,3 +58,4 @@ namespace Aplicacion.Casos_de_usos
         }
     }
 }
+*/
