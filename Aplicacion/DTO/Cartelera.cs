@@ -1,6 +1,6 @@
-﻿namespace Aplicacion.Casos_de_usos
+﻿namespace Aplicacion.DTO
 {
-    public class Cartelera
+    public class Cartelera //Un dto que regresará los datos más importantes asociados.
     {
         public string Titulo { get; set; }
         public string Sinopsis { get; set; }

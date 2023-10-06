@@ -1,5 +1,7 @@
-﻿using Aplicacion.Interfaces.Aplicacion;
+﻿using Aplicacion.DTO;
+using Aplicacion.Interfaces.Aplicacion;
 using Aplicación.Interfaces.Infraestructura;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +20,10 @@ namespace Aplicacion.Casos_de_usos
 
         async Task<List<Cartelera>> IFiltrar.Filtrar(string? Titulo = null, string? Fecha= null)
         {
-            List<Cartelera> Funciones = new List<Cartelera>();
-            foreach (var item in await _Consulta.Filtrar(Titulo, Fecha))
-            {
-                Funciones.Add(new Cartelera
+            List<Cartelera> Funciones = new List<Cartelera>(); //Lista de funciones (del tipo cartelera), que se devolverá
+            foreach (var item in await _Consulta.Filtrar(Titulo, Fecha)) //Se crean los dto de cartelera y se añaden a la lista. Esto es posible gracias
+            {                                                            //a que se llama a capa de infraestructura para recuperar los datos asociados de 
+                Funciones.Add(new Cartelera                              //las funciones segun los filtros establecidos.
                 {
                     Titulo=item.Peliculas.Titulo,
                     Sinopsis = item.Peliculas.Sinopsis,
@@ -36,29 +38,5 @@ namespace Aplicacion.Casos_de_usos
             };
             return Funciones;
         }
-
-
-        /*List<Cartelera> IFiltrar.FiltrarFunciones(List<Cartelera> carteleras, bool controlador)
-        {
-            Console.Clear();
-            Console.WriteLine("Por favor, ingrese la fecha en la cual desea conocer las funciones \nEn formato dd/mm ó ingresando los dias en formato numerico y los meses en texto(EJ: 12 de Septiembre)\n");
-            var respuesta = "no";
-            var func = _verificador.Verificacion(true);
-            var Funciones = carteleras.Where(p => p.Fecha == func).ToList();
-            if (!controlador)
-            {
-                Console.WriteLine("¿Desea conocer todas las funciones de una determinada pelicula para el día " + func.Date.ToShortDateString() + "?\n");
-                respuesta = Console.ReadLine().ToLower();
-                controlador = true;
-            }
-            if (controlador && respuesta == "si")
-            {
-                return _Filtrar.FiltrarPeliculas(Funciones, controlador);
-            }
-            else
-            {
-                return Funciones;
-            }
-        }*/
     }
 }

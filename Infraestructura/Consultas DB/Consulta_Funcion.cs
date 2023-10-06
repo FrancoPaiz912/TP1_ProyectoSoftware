@@ -15,23 +15,23 @@ namespace Infraestructura.Querys
             _Contexto = context;
         }
 
-        async Task<List<Funciones>> IConsultas.Filtrar(string? Titulo, string? dia)
+        async Task<List<Funciones>> IConsultas.Filtrar(string? Titulo, string? dia) //Se retornan las funciones con las tablas relacionadas acorde a los filtros aplicados
         {
             return await _Contexto.Funciones.Include(s => s.Tickets)
                 .Include(s => s.Salas)
                 .Include(s => s.Peliculas)
                 .ThenInclude(s => s.Generos)
                 .Where(s => ( Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && ( dia != null ? (s.Fecha==DateTime.Parse(dia)) : true)).ToListAsync();
-        }
+        } //Se utilizan condicionales ternarios para optimizar la busqueda.
 
         async Task<List<Peliculas>> IConsultas.ListarPeliculas()
         {
-           return await _Contexto.Peliculas.ToListAsync();
+           return await _Contexto.Peliculas.ToListAsync(); //Retorna la lista de peliculas asociadas
         }
 
         async Task<List<Salas>> IConsultas.ListarSalas()
         {
-            return await _Contexto.Salas.ToListAsync();
+            return await _Contexto.Salas.ToListAsync(); //Retorna la lista de salas asociadas
         }
     }
 }

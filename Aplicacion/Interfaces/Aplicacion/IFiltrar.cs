@@ -1,4 +1,4 @@
-﻿using Aplicacion.Casos_de_usos;
+﻿using Aplicacion.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
