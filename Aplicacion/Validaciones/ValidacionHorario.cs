@@ -9,7 +9,7 @@ namespace Aplicacion.Validaciones
 {
     public static class ValidacionHorario 
     {
-        public static int Verificacion_Horario(string Horario) //Comprobacion de que tanto la fecha como la hora se ingresen correctamente.
+        public static bool VerificacionHoraria(string Horario) //Comprobacion de que tanto la fecha como la hora se ingresen correctamente.
         {
             try
             {
@@ -22,13 +22,13 @@ namespace Aplicacion.Validaciones
             }
             catch (FormatException) //Control de excepcion de formato
             {
-                return 1; //Si retorno 1 es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
+                return false; //Si retorno false es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
             }
             catch (HorarioException) //Se controla la excepcion de ingresar la hora cuando no corresponde.
             {
-                return 2; //Si retorno 1 es que se produjo un error, debido a que se ingreso una fecha en lugar de un horario. Imprimo el mensaje en capa de presentacion
+                return false; //Si retorno false es que se produjo un error, debido a que se ingreso una fecha en lugar de un horario. Imprimo el mensaje en capa de presentacion
             }
-            return 0; //En caso de retornar 0, se ha ingresado correctamente un horario
+            return true; //En caso de retornar true, se ha ingresado correctamente un horario
         }
     }
 }

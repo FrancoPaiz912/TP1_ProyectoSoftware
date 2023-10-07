@@ -1,59 +1,51 @@
 ﻿using Aplicacion.DTO;
-using Aplicacion.Excepciones;
 using Aplicacion.Interfaces.Aplicacion;
 using Aplicacion.Validaciones;
-using System;
 
 namespace Presentacion
 {
-    public class Filtro
+    public class Filtros
     {
-        private readonly IFiltrar _Filtro;
+        private readonly IFiltrar _Filtrar;
 
-        public Filtro(IFiltrar Filtro)
+        public Filtros(IFiltrar Filtrar)
         {
-            _Filtro = Filtro;
+            _Filtrar = Filtrar;
         }
 
-        public async Task RealizarFiltro()
+        public async Task ComenzarFiltrado()
         {
             List<Cartelera> Funciones = new List<Cartelera>(); //Se usa para recibir las funciones en cartelera e imprimir los datos
             Console.Clear();
             string Fecha;
-            int Result;
+            bool Result;
             bool Iterador = true; //Iterador que nos permitira realizar el bucle con el fin de que se ingresen todos los datos correctamente
             while (Iterador)
             {
                 Console.Clear();
                 Console.WriteLine("Por favor, siga las siguientes indicaciones para filtrar funciones:  \n1.Para filtrar por Fecha \n2.Para filtrar por Pelicula \n3.Para filtrar por ambos \n");
-                switch (ValidacionNumerica.Comprobar_Parseo(Console.ReadLine())) //Ingreso de opcion 
+                switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine())) //Ingreso de opcion 
                 {
                     case 1:
                         Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                         do
                         {
                             Fecha = Console.ReadLine();
-                            Result = ValidacionFecha.Verificacion_Fecha(Fecha);
-                            if (Result == 1)
+                            Result = ValidacionFecha.VerificacionFecha(Fecha); //Llamamos a la clase estatica para comprobar que la fecha ingresada sea en el formato correcto
+                            if (!Result)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Ingrese un formato adecuado (dd/mm)\n");
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                             }
-                            if (Result == 2)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Ha ingresado un horario. \nPor favor ingrese la fecha con el formato correcto. (dd/mm)");
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                            }
-                        } while (Result != 0);
-                        Funciones = await _Filtro.Filtrar(null, Fecha); //Se llama a capa de aplicacion, enviandole en este caso unicamente la fecha, para que realice el filtrado.
+                        } while (Result);
+                        Funciones = await _Filtrar.SolicitarFiltrado(null, Fecha); //Se llama a capa de aplicacion, enviandole en este caso unicamente la fecha, para que realice el filtrado.
                         Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
                         break;
                     case 2:
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
                         string? Titulo = Console.ReadLine().ToUpper(); //Ingresamos el titulo de la pelicula a filtrar
-                        Funciones = await _Filtro.Filtrar(Titulo, null); //Se llama a capa de aplicacion, enviandole en este caso unicamente el titulo de la pelicula, para que realice el filtrado.
+                        Funciones = await _Filtrar.SolicitarFiltrado(Titulo, null); //Se llama a capa de aplicacion, enviandole en este caso unicamente el titulo de la pelicula, para que realice el filtrado.
                         Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
                         break;
                     case 3:
@@ -61,23 +53,17 @@ namespace Presentacion
                         do
                         {
                             Fecha = Console.ReadLine();
-                            Result = ValidacionFecha.Verificacion_Fecha(Fecha);
-                            if (Result == 1)
+                            Result = ValidacionFecha.VerificacionFecha(Fecha);
+                            if (!Result)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Ingrese un formato adecuado (dd/mm)\n");
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                             }
-                            if (Result == 2)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Ha ingresado un horario. \nPor favor ingrese la fecha con el formato correcto. (dd/mm)");
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                            }
-                        } while (Result != 0);
+                        }while (Result);
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
                         string? Nombre_Pelicula = Console.ReadLine().ToUpper(); //Ingresamos el titulo de la pelicula a filtrar
-                        Funciones = await _Filtro.Filtrar(Nombre_Pelicula, Fecha); //Se llama a capa de aplicacion, enviandole en este caso tanto la fecha como el titulo de la pelicula, para que realice el filtrado.
+                        Funciones = await _Filtrar.SolicitarFiltrado(Nombre_Pelicula, Fecha); //Se llama a capa de aplicacion, enviandole en este caso tanto la fecha como el titulo de la pelicula, para que realice el filtrado.
                         Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
                         break;
                     case 400: //Caso para el FormatException

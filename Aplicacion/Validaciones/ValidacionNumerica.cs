@@ -8,11 +8,11 @@ namespace Aplicacion.Validaciones
 {
     public static class ValidacionNumerica
     {
-        public static int Comprobar_Parseo(string Num)
+        public static int ComprobarParseo(string Valor)
         {
             try
             {
-                int Numero = int.Parse(Num);
+                int Numero = int.Parse(Valor);//Verificamos si realmente se puede parsear, en caso de que no se pueda arrojará una de las siguientes dos excepciones.
             }
             catch (FormatException)
             {
@@ -22,7 +22,7 @@ namespace Aplicacion.Validaciones
             {
                 return 409; //En relacion al mensaje de conflicto HTTP
             }
-            return int.Parse(Num);
+            return int.Parse(Valor); //En caso de poder parsear se envia el valor parceado.
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Aplicacion.Validaciones
 
         async Task<bool> IValidacionID.ComprobarSalaId(int Id)
         {
-            Salas? Result = await _Consulta.GetSalaById(Id);
+            Salas? Result = await _Consulta.GetSalaById(Id); //Comprobamos que exista una sala asociada al id recibido
             if (Id > 0 && Result != null)
             {
-                return true; //Si existe una pelicula asociada con ese id en la base de datos, entonces se retorna true para romper el bucle
+                return true; //Si existe una sala asociada con ese id en la base de datos, entonces se retorna true para romper el bucle
             }
 
             return false; //En caso contrario devolvemos false para que se vuelva a ingresar el id.
@@ -26,10 +26,10 @@ namespace Aplicacion.Validaciones
 
         async Task<bool> IValidacionID.ComprobarPeliculaId(int Id)
         {
-            Peliculas? Result = await _Consulta.GetPeliculaById(Id);
+            Peliculas? Result = await _Consulta.GetPeliculaById(Id); //Comprobamos que exista una pelicula asociada al id recibido
             if (Id > 0 && Result != null)
             {
-                return true; //Si existe una sala asociada con ese id en la base de datos, entonces se retorna true para romper el bucle.
+                return true; //Si existe una pelicula asociada con ese id en la base de datos, entonces se retorna true para romper el bucle.
             }
 
             return false; //En caso contrario devolvemos false para que se vuelva a ingresar el id.

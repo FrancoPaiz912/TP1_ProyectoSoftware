@@ -9,7 +9,7 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IListarFunciones
     {
-        Task<List<Peliculas>> GetPeliculas();
-        Task<List<Salas>> GetSalas();
+        Task<List<Peliculas>> ListarPeliculas();
+        Task<List<Salas>> ListarSalas();
     }
 }

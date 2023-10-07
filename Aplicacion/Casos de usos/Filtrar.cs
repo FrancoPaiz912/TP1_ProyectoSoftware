@@ -1,24 +1,18 @@
 ﻿using Aplicacion.DTO;
 using Aplicacion.Interfaces.Aplicacion;
 using Aplicación.Interfaces.Infraestructura;
-using Dominio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplicacion.Casos_de_usos
 {
     public class Filtrar : IFiltrar
     {
         private readonly IConsultas _Consulta;
-        public Filtrar(IConsultas consulta)
+        public Filtrar(IConsultas Consulta)
         {
-            _Consulta = consulta;
+            _Consulta = Consulta;
         }
 
-        async Task<List<Cartelera>> IFiltrar.Filtrar(string? Titulo = null, string? Fecha= null)
+        async Task<List<Cartelera>> IFiltrar.SolicitarFiltrado(string? Titulo = null, string? Fecha= null)
         {
             List<Cartelera> Funciones = new List<Cartelera>(); //Lista de funciones (del tipo cartelera), que se devolvera
             foreach (var item in await _Consulta.Filtrar(Titulo, Fecha)) //Se crean los dto de cartelera y se añaden a la lista. Esto es posible gracias

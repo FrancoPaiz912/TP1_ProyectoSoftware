@@ -5,10 +5,10 @@ namespace Aplicación.Interfaces.Infraestructura
 {
     public interface IConsultas
     {
-        Task<List<Funciones>> Filtrar(string? Titulo, string? dia);
-        Task<List<Peliculas>> ListarPeliculas();
-        Task<List<Salas>> ListarSalas();
-        Task<Peliculas?> GetPeliculaById(int id);
-        Task<Salas?> GetSalaById(int id);
+        Task<List<Funciones>> Filtrar(string? Titulo, string? Fecha);
+        Task<List<Peliculas>> GetPeliculas();
+        Task<List<Salas>> GetSalas();
+        Task<Peliculas?> GetPeliculaById(int Id);
+        Task<Salas?> GetSalaById(int Id);
     }
 }

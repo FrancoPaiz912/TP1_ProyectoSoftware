@@ -5,25 +5,24 @@ using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
 using Presentacion;
-using System;
 
 class Program
 {
     public static async Task Main(string[] args)
     {
-        IConsultas Querys = new Consulta_Funcion(new Contexto_Cine());
-        IAgregar Inserts = new Insertar_Funcion(new Contexto_Cine());
+        IConsultas Querys = new ConsultasFunciones(new Contexto_Cine());
+        IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();//Para que muestre adecuadamente el color de fondo
         
-        while (await Menú(Querys,Inserts))//Llamada al menu de opciones
+        while (await Menu(Querys,Inserts))//Llamada al menu de opciones
         {
             Console.Clear(); 
         }
     }
 
-    static async Task<bool> Menú(IConsultas Querys, IAgregar Inserts)
+    static async Task<bool> Menu(IConsultas Querys, IAgregar Inserts)
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("*----------------------------------------------------------------*");
@@ -37,15 +36,15 @@ class Program
         Console.WriteLine("*----------------------------------------------------------------*");
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("\nPor favor escoja que desea hacer ingresando el numero correspondiente: \n1. Listar funciones \n2. Registrar funcion \n3. Salir del programa \n");
-        switch (ValidacionNumerica.Comprobar_Parseo(Console.ReadLine()))
+        switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine()))
         {
             case 1:
-                Filtro Filtrar = new Filtro(new Filtrar(Querys));
-                await Filtrar.RealizarFiltro(); //Llamamos a la clase filtrar, la cual pedira los datos necesarios para realizar el filtrado
+                Filtros IniciarFiltrado = new Filtros(new Filtrar(Querys));
+                await IniciarFiltrado.ComenzarFiltrado(); //Llamamos a la clase filtrar, la cual pedira los datos necesarios para realizar el filtrado
                 break;
             case 2:
-                AgregarFuncion Add = new AgregarFuncion(new AgregarFunciones(Inserts), new ListarFunciones(Querys), new ValidacionID(Querys));
-                await Add.AddFuncion(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva funciun
+                AgregarFuncion AgregarFuncion = new AgregarFuncion(new RegistrarFuncion(Inserts), new ListarFunciones(Querys), new ValidacionID(Querys));
+                await AgregarFuncion.RecopilarDatos(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva funciun
                 Console.WriteLine("Funcion programada con exito. \nOprima cualquier tecla para continuar");
                 Console.ReadKey();
                 break;

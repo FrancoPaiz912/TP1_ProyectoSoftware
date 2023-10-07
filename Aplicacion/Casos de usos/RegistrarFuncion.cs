@@ -5,20 +5,20 @@ using Dominio;
 
 namespace Aplicacion.Casos_de_usos
 {
-    public  class AgregarFunciones : IAgregarFunciones
+    public  class RegistrarFuncion : IAgregarFunciones
     {
         private readonly IAgregar _Agregar;
-        public AgregarFunciones(IAgregar Agregar)
+        public RegistrarFuncion(IAgregar Agregar)
         {
             _Agregar = Agregar;
         }
 
-        void IAgregarFunciones.RegistrarFuncion(int ID_Pelicula,int ID_Sala,DateTime Fecha,TimeSpan Horario)
+        void IAgregarFunciones.RegistrarFuncion(int IdPelicula,int IdSala,DateTime Fecha,TimeSpan Horario)
         {
             _Agregar.AlmacenarFuncion(new Funciones //Se crea la nueva funcion con los datos ya validados, y se envía a infraestructura.
             {
-                PeliculaId = ID_Pelicula,
-                SalaId = ID_Sala,
+                PeliculaId = IdPelicula,
+                SalaId = IdSala,
                 Fecha = Fecha,
                 Horario = Horario,
             });

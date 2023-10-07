@@ -9,7 +9,7 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IFiltrar
     {
-        Task<List<Cartelera>> Filtrar(string? Titulo, string? Fecha);
+        Task<List<Cartelera>> SolicitarFiltrado(string? Titulo, string? Fecha);
 
     }
 }
