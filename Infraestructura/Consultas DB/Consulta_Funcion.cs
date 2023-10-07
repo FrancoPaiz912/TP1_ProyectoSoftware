@@ -24,6 +24,17 @@ namespace Infraestructura.Querys
                 .Where(s => ( Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && ( dia != null ? (s.Fecha==DateTime.Parse(dia)) : true)).ToListAsync();
         } //Se utilizan condicionales ternarios para optimizar la busqueda.
 
+        async Task<Peliculas?> IConsultas.GetPeliculaById(int id)
+        {
+            Peliculas? asg= await _Contexto.Peliculas.FirstOrDefaultAsync(s => s.Peliculasid == id);
+            return asg;
+        }
+
+        async Task<Salas?> IConsultas.GetSalaById(int id)
+        {
+            return await _Contexto.Salas.FirstOrDefaultAsync(s => s.SalaId == id);
+        }
+
         async Task<List<Peliculas>> IConsultas.ListarPeliculas()
         {
            return await _Contexto.Peliculas.ToListAsync(); //Retorna la lista de peliculas asociadas

@@ -20,7 +20,7 @@ namespace Aplicacion.Casos_de_usos
 
         async Task<List<Cartelera>> IFiltrar.Filtrar(string? Titulo = null, string? Fecha= null)
         {
-            List<Cartelera> Funciones = new List<Cartelera>(); //Lista de funciones (del tipo cartelera), que se devolverá
+            List<Cartelera> Funciones = new List<Cartelera>(); //Lista de funciones (del tipo cartelera), que se devolvera
             foreach (var item in await _Consulta.Filtrar(Titulo, Fecha)) //Se crean los dto de cartelera y se añaden a la lista. Esto es posible gracias
             {                                                            //a que se llama a capa de infraestructura para recuperar los datos asociados de 
                 Funciones.Add(new Cartelera                              //las funciones segun los filtros establecidos.

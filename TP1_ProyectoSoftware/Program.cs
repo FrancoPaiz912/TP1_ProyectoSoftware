@@ -1,9 +1,11 @@
 ﻿using Aplicacion.Casos_de_usos;
 using Aplicación.Interfaces.Infraestructura;
+using Aplicacion.Validaciones;
 using Infraestructura.EstructuraDB;
 using Infraestructura.Inserts;
 using Infraestructura.Querys;
 using Presentacion;
+using System;
 
 class Program
 {
@@ -15,61 +17,56 @@ class Program
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();//Para que muestre adecuadamente el color de fondo
         
-        while (await Menú(Querys,Inserts))
+        while (await Menú(Querys,Inserts))//Llamada al menu de opciones
         {
-            Console.Clear(); //Llamada al menú de opciones
+            Console.Clear(); 
         }
     }
 
     static async Task<bool> Menú(IConsultas Querys, IAgregar Inserts)
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("*------------------------------------------------------------------*");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("|                    Bienvenidos al Cine Rocket                    |");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("|                                                                  |");
-        Console.WriteLine("*------------------------------------------------------------------*");
+        Console.WriteLine("*----------------------------------------------------------------*");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                   Bienvenido al Cine Rocket                    |");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                                                                |");
+        Console.WriteLine("*----------------------------------------------------------------*");
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("Por favor escoja que desea hacer ingresando el número correspondiente \n1. Listar funciones \n2. Ingresar función \n3. Salir del programa \n");
-        try
+        Console.WriteLine("\nPor favor escoja que desea hacer ingresando el numero correspondiente: \n1. Listar funciones \n2. Registrar funcion \n3. Salir del programa \n");
+        switch (ValidacionNumerica.Comprobar_Parseo(Console.ReadLine()))
         {
-            int eleccion = int.Parse(Console.ReadLine()); //Se escoge lo que se desea realizar
-            switch (eleccion)
-            {
-                case 1:
-                    Filtro Filtrar= new Filtro(new Filtrar(Querys)); 
-                    await Filtrar.RealizarFiltro(); //Llamamos a la clase filtrar, la cual pedirá los datos necesarios para realizar el filtrado
-                    break;
-                case 2:
-                    AgregarFuncion Add = new AgregarFuncion(new AgregarFunciones(Inserts), new ListarFunciones(Querys)); 
-                    await Add.AddFuncion(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva función
-                    Console.WriteLine("Funcion programada con exito. \nOprima cualquier tecla para continuar");
-                    Console.ReadKey();
-                    break;
-                case 3:
-                    Console.WriteLine("Gracias por elegirnos, que tenga buen día <3. \n");
-                    return false;
-                default: //Controlamos cualquier otro valor númerico no ofrecido como opción que haya escogido el usuario
-                    Console.ForegroundColor = ConsoleColor.Red; 
-                    Console.WriteLine("Opción incorrecta, escoga una de las opciones brindadas por el sistema. \nOprima cualquier tecla para continuar");
-                    Console.ReadKey();
-                    break;
-                }
-            }catch (OverflowException)
-        { //Excepción de desborde en caso de que se exceda la cantidad de números ingresados
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica válida \nOprima cualquier tecla para continuar");
-            Console.ReadKey();
-        }
-        catch (FormatException)
-        {//Excepcion de formato, en caso de ingresar algún caracter no númerico.
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Opcion incorrecta, Ingrese una opción numerica \nOprima cualquier tecla para continuar");
-            Console.ReadKey();
+            case 1:
+                Filtro Filtrar = new Filtro(new Filtrar(Querys));
+                await Filtrar.RealizarFiltro(); //Llamamos a la clase filtrar, la cual pedira los datos necesarios para realizar el filtrado
+                break;
+            case 2:
+                AgregarFuncion Add = new AgregarFuncion(new AgregarFunciones(Inserts), new ListarFunciones(Querys), new ValidacionID(Querys));
+                await Add.AddFuncion(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva funciun
+                Console.WriteLine("Funcion programada con exito. \nOprima cualquier tecla para continuar");
+                Console.ReadKey();
+                break;
+            case 3:
+                Console.WriteLine("Gracias por elegirnos, que tenga buen día <3. \n");
+                return false; //Al finalizar el programa, no es necesario incluir un break.
+            case 400: //Caso para el FormatException
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica \nOprima cualquier tecla para continuar");
+                Console.ReadKey();
+                break;
+            case 409: //Caso para el OverflowException
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica valida \nOprima cualquier tecla para continuar");
+                Console.ReadKey();
+                break;
+            default: //Controlamos cualquier otro valor númerico no ofrecido como opción que haya escogido el usuario
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Opcion incorrecta, escoga una de las opciones brindadas por el sistema. \nOprima cualquier tecla para continuar");
+                Console.ReadKey();
+                break;
         }
         return true;
     }
