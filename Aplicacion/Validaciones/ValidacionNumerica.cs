@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aplicacion.Validaciones
+﻿namespace Aplicacion.Validaciones
 {
     public static class ValidacionNumerica
     {
@@ -16,11 +10,11 @@ namespace Aplicacion.Validaciones
             }
             catch (FormatException)
             {
-                return 400;  //En relacion al mensaje de Bad Request HTTP
+                return -1;  //En relacion al mensaje de Bad Request HTTP
             }
             catch (OverflowException)
             {
-                return 409; //En relacion al mensaje de conflicto HTTP
+                return -1; 
             }
             return int.Parse(Valor); //En caso de poder parsear se envia el valor parceado.
         }

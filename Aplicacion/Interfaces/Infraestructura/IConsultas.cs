@@ -1,5 +1,4 @@
-﻿using Aplicacion.Casos_de_usos;
-using Dominio;
+﻿using Dominio;
 
 namespace Aplicación.Interfaces.Infraestructura
 {

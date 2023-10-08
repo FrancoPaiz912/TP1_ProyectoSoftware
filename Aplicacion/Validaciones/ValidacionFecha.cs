@@ -1,9 +1,4 @@
 ﻿using Aplicacion.Excepciones;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplicacion.Validaciones
 {
@@ -22,13 +17,13 @@ namespace Aplicacion.Validaciones
             }
             catch (FormatException) //Control de excepcion de formato
             {
-                return false; //Si retorno 1 es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
+                return true; //Si retorno 1 es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
             }
             catch (FechaException) //Se controla la excepcion de ingresar la hora cuando no corresponde.
             {
-                return false; //Si retorno 1 es que se produjo un error, debido a que se ingreso una hora en lugar de una fecha. Imprimo el mensaje en capa de presentacion
+                return true; //Si retorno 1 es que se produjo un error, debido a que se ingreso una hora en lugar de una fecha. Imprimo el mensaje en capa de presentacion
             }
-            return true; //En caso de retornar 0, se ha ingresado correctamente una fecha
+            return false; //En caso de retornar 0, se ha ingresado correctamente una fecha
         }
     }
 }

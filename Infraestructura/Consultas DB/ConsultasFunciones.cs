@@ -1,5 +1,4 @@
-﻿using Aplicacion.Casos_de_usos;
-using Aplicación.Interfaces.Infraestructura;
+﻿using Aplicación.Interfaces.Infraestructura;
 using Dominio;
 using Infraestructura.EstructuraDB;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +20,12 @@ namespace Infraestructura.Querys
                 .Include(s => s.Salas)
                 .Include(s => s.Peliculas)
                 .ThenInclude(s => s.Generos)
-                .Where(s => ( Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && ( Fecha != null ? (s.Fecha==DateTime.Parse(Fecha)) : true)).ToListAsync();
+                .Where(s => (Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && (Fecha != null ? (s.Fecha == DateTime.Parse(Fecha)) : true)).ToListAsync();
         } //Se utilizan condicionales ternarios para optimizar la busqueda.
 
         async Task<Peliculas?> IConsultas.GetPeliculaById(int Id)
         {
-            Peliculas? asg= await _Contexto.Peliculas.FirstOrDefaultAsync(s => s.Peliculasid == Id);
+            Peliculas? asg = await _Contexto.Peliculas.FirstOrDefaultAsync(s => s.Peliculasid == Id);
             return asg;
         }
 
@@ -37,7 +36,7 @@ namespace Infraestructura.Querys
 
         async Task<List<Peliculas>> IConsultas.GetPeliculas()
         {
-           return await _Contexto.Peliculas.ToListAsync(); //Retorna la lista de peliculas asociadas
+            return await _Contexto.Peliculas.ToListAsync(); //Retorna la lista de peliculas asociadas
         }
 
         async Task<List<Salas>> IConsultas.GetSalas()

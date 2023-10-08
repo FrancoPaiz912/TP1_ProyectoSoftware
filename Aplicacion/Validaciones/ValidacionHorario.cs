@@ -1,13 +1,8 @@
 ﻿using Aplicacion.Excepciones;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplicacion.Validaciones
 {
-    public static class ValidacionHorario 
+    public static class ValidacionHorario
     {
         public static bool VerificacionHoraria(string Horario) //Comprobacion de que tanto la fecha como la hora se ingresen correctamente.
         {
@@ -22,13 +17,13 @@ namespace Aplicacion.Validaciones
             }
             catch (FormatException) //Control de excepcion de formato
             {
-                return false; //Si retorno false es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
+                return true; //Si retorno false es que se produjo un error de formato, imprimo el mensaje en capa de presentacion
             }
             catch (HorarioException) //Se controla la excepcion de ingresar la hora cuando no corresponde.
             {
-                return false; //Si retorno false es que se produjo un error, debido a que se ingreso una fecha en lugar de un horario. Imprimo el mensaje en capa de presentacion
+                return true; //Si retorno false es que se produjo un error, debido a que se ingreso una fecha en lugar de un horario. Imprimo el mensaje en capa de presentacion
             }
-            return true; //En caso de retornar true, se ha ingresado correctamente un horario
+            return false; //En caso de retornar true, se ha ingresado correctamente un horario
         }
     }
 }

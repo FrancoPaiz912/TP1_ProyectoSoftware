@@ -5,15 +5,15 @@ namespace Presentacion
 {
     public class AgregarFuncion
     {
-        private readonly IAgregarFunciones _Agregar;
-        private readonly IListarFunciones _GetLista;
-        private readonly IValidacionID _ValidadorID;
+        private readonly IAgregarFunciones Agregar;
+        private readonly IListarFunciones GetLista;
+        private readonly IValidacionID ValidadorID;
 
         public AgregarFuncion(IAgregarFunciones Agregar, IListarFunciones GetILista, IValidacionID ValidadorID)
         {
-            _Agregar = Agregar;
-            _GetLista = GetILista;
-            _ValidadorID = ValidadorID;
+            this.Agregar = Agregar;
+            this.GetLista = GetILista;
+            this.ValidadorID = ValidadorID;
         }
 
         public async Task RecopilarDatos()
@@ -23,32 +23,26 @@ namespace Presentacion
             bool Result;
             Console.Clear();
             Console.WriteLine("Por favor escoja la funcion a añadir de acuerdo a los siguientes parametros: \nID de Pelicula \n");
-            foreach (var Peli in await _GetLista.ListarPeliculas()) //Imprimimos los titulos registrados con sus id pertinentes(gracias a que se llama a capa de aplicacion y se retornas las peliculas registradas)
+            foreach (var Peli in await GetLista.ListarPeliculas()) //Imprimimos los titulos registrados con sus id pertinentes(gracias a que se llama a capa de aplicacion y se retornas las peliculas registradas)
             {
                 Console.WriteLine("ID: " + Peli.Peliculasid + "         - Titulo de la Pelicula: " + Peli.Titulo);
             };
-            do{
+            do
+            {
                 Console.WriteLine("Por favor escoga entre los id presentados previamente");
                 IdPeli = ValidacionNumerica.ComprobarParseo(Console.ReadLine()); //Validamos que se haya ingresado un valor numerico correctamente
-                if (IdPeli == 400) //Caso para el OverflowException
+                if (IdPeli < 0) //Caso para el OverflowException
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica \nOprima cualquier tecla para continuar");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.ReadKey();
-                }
-                if (IdPeli == 409) //Caso para el OverflowException
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica valida \nOprima cualquier tecla para continuar");
+                    Console.WriteLine("Opcion incorrecta, ingrese un valor numerico que se encuentre entre las opciones establecidas por el sistema siendo este mayor a 0\nOprima cualquier tecla para continuar");
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.ReadKey();
                 }
 
-            }while (! await _ValidadorID.ComprobarPeliculaId(IdPeli)); //Llamamos al metodo correspondiente para verificar que el usuario ingrese una id asociada a una pelicula existente en la base de datos.
+            } while (!await ValidadorID.ComprobarPeliculaId(IdPeli)); //Llamamos al metodo correspondiente para verificar que el usuario ingrese una id asociada a una pelicula existente en la base de datos.
             Console.Clear();
-            Console.WriteLine("ID de la sala \n"); 
-            foreach (var sala in await _GetLista.ListarSalas()) //Lo mismo que antes solo que para las salas
+            Console.WriteLine("ID de la sala \n");
+            foreach (var sala in await GetLista.ListarSalas()) //¿Hago una clase para imprimir salas en vez de imprimir por acá?
             {
                 Console.WriteLine("ID:" + sala.SalaId + "    - Nombre de la sala: " + sala.Nombre + "            - Capacidad: " + sala.Capacidad);
             };
@@ -56,27 +50,21 @@ namespace Presentacion
             {
                 Console.WriteLine("Por favor escoga entre los id presentados previamente");
                 IdSala = ValidacionNumerica.ComprobarParseo(Console.ReadLine()); //Validamos que se haya ingresado un valor numerico correctamente
-                if (IdSala == 400) //Caso para el OverflowException
+                if (IdSala < 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica \nOprima cualquier tecla para continuar");
+                    Console.WriteLine("Opcion incorrecta, ingrese un valor numerico que se encuentre entre las opciones establecidas por el sistema siendo este mayor a 0\nOprima cualquier tecla para continuar");
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.ReadKey();
                 }
-                if (IdSala == 409) //Caso para el OverflowException
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica valida \nOprima cualquier tecla para continuar");
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.ReadKey();
-                }
-            } while (! await _ValidadorID.ComprobarSalaId(IdSala)); //Llamamos al metodo correspondiente para verificar que el usuario ingrese una id asociada a una sala existente en la base de datos.
+            } while (!await ValidadorID.ComprobarSalaId(IdSala)); //Llamamos al metodo correspondiente para verificar que el usuario ingrese una id asociada a una sala existente en la base de datos.
             Console.Clear();
             Console.WriteLine("Fecha \nFormato: dd/mm o dia en forma numerica y mes en texto (EJ: 12 de Septiembre) \n");
-            do {
+            do
+            {
                 ComprobarTiempo = Console.ReadLine();
-                Result=ValidacionFecha.VerificacionFecha(ComprobarTiempo); //Validamos que se haya ingresado un valor que corresponda a una fecha. Es decir, que se peuda convertir correctamente
-                if (!Result) //Si se retorno true, fue porque se produjo un error de formato (una excepcion). Se indica el error.
+                Result = ValidacionFecha.VerificacionFecha(ComprobarTiempo); //Validamos que se haya ingresado un valor que corresponda a una fecha. Es decir, que se peuda convertir correctamente
+                if (Result) //Si se retorno true, fue porque se produjo un error de formato (una excepcion). Se indica el error.
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Ingrese un formato adecuado (dd/mm)\n");
@@ -90,7 +78,7 @@ namespace Presentacion
             {
                 ComprobarTiempo = Console.ReadLine();
                 Result = ValidacionHorario.VerificacionHoraria(ComprobarTiempo); //Validamos que se haya ingresado un valor que corresponda a una fecha. Es decir, que se peuda convertir correctamente
-                if (!Result) //Si se retorno true, fue porque se produjo un error de formato (una excepcion). Se indica el error.
+                if (Result) //Si se retorno true, fue porque se produjo un error de formato (una excepcion). Se indica el error.
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Ingrese un formato adecuado (hh:mm)\n");
@@ -98,7 +86,7 @@ namespace Presentacion
                 }
             } while (Result);
             TimeSpan Horario = DateTime.Parse(ComprobarTiempo).TimeOfDay; //Una vez validada la hora, se pasa a timespan. Listo para enviar para el registro.
-            _Agregar.RegistrarFuncion(IdPeli,IdSala,Fecha,Horario); //Se pasan los datos recopilados a capa de aplicacion
+            Agregar.RegistrarFuncion(IdPeli, IdSala, Fecha, Horario); //Se pasan los datos recopilados a capa de aplicacion
         }
     }
 }

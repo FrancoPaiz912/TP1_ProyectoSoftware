@@ -2,7 +2,7 @@
 {
     public class HorarioException : Exception
     {
-        public HorarioException(string Mensaje) : base(Mensaje) 
+        public HorarioException(string Mensaje) : base(Mensaje)
         {
         }
     }

@@ -68,7 +68,7 @@ namespace Infraestructura.EstructuraDB
                 .HasForeignKey(fk => fk.FuncionId);
             });
 
-            modelBuilder.Entity<Generos>(Entity => 
+            modelBuilder.Entity<Generos>(Entity =>
             {
                 Entity.ToTable("Generos");
                 Entity.HasKey(pk => pk.GenerosId);
@@ -82,12 +82,12 @@ namespace Infraestructura.EstructuraDB
                 Entity.HasData(new Generos
                 {
                     GenerosId = 1,
-                    Nombre="Acción",
+                    Nombre = "Acción",
                 });
                 Entity.ToTable("Genero");
                 Entity.HasData(new Generos
                 {
-                    GenerosId=2,
+                    GenerosId = 2,
                     Nombre = "Aventuras",
                 });
                 Entity.ToTable("Genero");
@@ -152,8 +152,8 @@ namespace Infraestructura.EstructuraDB
                 Entity.HasData(new Salas
                 {
                     SalaId = 2,
-                    Nombre="2",
-                    Capacidad=15
+                    Nombre = "2",
+                    Capacidad = 15
                 });
                 Entity.HasData(new Salas
                 {
@@ -162,18 +162,18 @@ namespace Infraestructura.EstructuraDB
                     Capacidad = 35
                 });
             });
-            
-            modelBuilder.Entity<Peliculas>(Entity => 
+
+            modelBuilder.Entity<Peliculas>(Entity =>
             {
                 Entity.ToTable("Peliculas");
                 Entity.HasData(new Peliculas
                 {
                     Peliculasid = 1,
                     Titulo = "EL REY LEÓN",
-                    Poster= "https://sm.ign.com/t/ign_es/screenshot/default/d0n-cinv4aahikr_mmkj.960.jpg",
-                    Sinopsis= "Tras el asesinato de su padre, Simba, un joven león es apartado su reino y tendrá que descubrir con ayuda de amigos de la sabana africana el significado de la responsabilidad y la valentía. Más tarde volverá para recuperar el control de su reino.",
+                    Poster = "https://sm.ign.com/t/ign_es/screenshot/default/d0n-cinv4aahikr_mmkj.960.jpg",
+                    Sinopsis = "Tras el asesinato de su padre, Simba, un joven león es apartado su reino y tendrá que descubrir con ayuda de amigos de la sabana africana el significado de la responsabilidad y la valentía. Más tarde volverá para recuperar el control de su reino.",
                     Trailer = "https://www.youtube.com/watch?v=0U-kFH-ixV0&ab_channel=DubZone%3ALatinoam%C3%A9rica",
-                    Genero=2
+                    Genero = 2
 
                 });
                 Entity.HasData(new Peliculas
@@ -183,7 +183,7 @@ namespace Infraestructura.EstructuraDB
                     Poster = "https://i.blogs.es/617177/super-mario-bros-pelicula-mario/450_1000.webpupdate-database",
                     Sinopsis = "Dos hermanos plomeros, Mario y Luigi, caen por las alcantarillas y llegan a un mundo subterráneo mágico en el que deben enfrentarse al malvado Bowser para rescatar a la princesa Peach, quien ha sido forzada a aceptar casarse con él.",
                     Trailer = "https://www.youtube.com/watch?v=SvJwEiy2Wok&ab_channel=SensaCineTRAILERS",
-                    Genero=7
+                    Genero = 7
                 });
                 Entity.HasData(new Peliculas
                 {
@@ -192,7 +192,7 @@ namespace Infraestructura.EstructuraDB
                     Poster = "https://es.web.img3.acsta.net/pictures/22/06/16/12/54/0504030.jpg",
                     Sinopsis = "Gato ha usado ocho de sus nueve vidas y ha perdido la cuenta. Para recuperarlas, se embarca en una gran aventura en la Selva Negra en busca de la mítica Estrella del Deseo, su última esperanza de recuperar sus vidas perdidas.",
                     Trailer = "https://www.youtube.com/watch?v=O_pRSxYuSU8&ab_channel=SensaCineTRAILERS",
-                    Genero=7
+                    Genero = 7
                 });
                 Entity.HasData(new Peliculas
                 {
@@ -210,7 +210,7 @@ namespace Infraestructura.EstructuraDB
                     Poster = "https://cdn.diariojornada.com.ar/imagenes/2023/5/22/347430_1_125855_raw.jpg",
                     Sinopsis = "Dom Toretto y sus familias se enfrentan al peor enemigo imaginable, uno llegado desde el pasado con sed de venganza, dispuesto a cualquier cosa con tal de destruir todo aquello que Dom ama.",
                     Trailer = "https://www.youtube.com/watch?v=O5BOxn8Go8U&ab_channel=UniversalPicturesM%C3%A9xico",
-                    Genero=1
+                    Genero = 1
                 });
                 Entity.HasData(new Peliculas
                 {
@@ -219,7 +219,7 @@ namespace Infraestructura.EstructuraDB
                     Poster = "https://image.tmdb.org/t/p/original/pgDWrhaz0rSsD43ocNDX3PRIKJ3.jpg",
                     Sinopsis = "Después de reunirse con Gwen Stacy, el amigable vecino de tiempo completo de Brooklyn Spiderman, es lanzado a través del multiverso, donde se encuentra a un equipo de gente araña encomendada con proteger su mera existencia.",
                     Trailer = "https://www.youtube.com/watch?v=rVLFOx7AQp0&ab_channel=SensaCineTRAILERS",
-                    Genero =2
+                    Genero = 2
                 });
                 Entity.HasData(new Peliculas
                 {
@@ -228,7 +228,7 @@ namespace Infraestructura.EstructuraDB
                     Poster = "https://fotos.perfil.com//2023/05/31/900/0/blondi-1579634.jpeg",
                     Sinopsis = "Blondi es una película que sigue la vida cotidiana de una joven madre y su hijo de veinte años, quienes viven como amigos compartiendo gustos por la música, las salidas nocturnas, la marihuana y el alcohol.",
                     Trailer = "https://www.youtube.com/watch?v=4TQcc7W45oA&ab_channel=TulipPictures",
-                    Genero =4
+                    Genero = 4
                 });
                 Entity.HasData(new Peliculas
                 {

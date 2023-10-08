@@ -8,15 +8,15 @@ namespace Aplicacion.Validaciones
     { //Compruebo si el id ingresado existe en la base de datos
         private readonly IConsultas _Consulta;
 
-        public ValidacionID(IConsultas Consulta) 
-        { 
+        public ValidacionID(IConsultas Consulta)
+        {
             _Consulta = Consulta;
         }
 
         async Task<bool> IValidacionID.ComprobarSalaId(int Id)
         {
             Salas? Result = await _Consulta.GetSalaById(Id); //Comprobamos que exista una sala asociada al id recibido
-            if (Id > 0 && Result != null)
+            if (Result != null)
             {
                 return true; //Si existe una sala asociada con ese id en la base de datos, entonces se retorna true para romper el bucle
             }
@@ -27,7 +27,7 @@ namespace Aplicacion.Validaciones
         async Task<bool> IValidacionID.ComprobarPeliculaId(int Id)
         {
             Peliculas? Result = await _Consulta.GetPeliculaById(Id); //Comprobamos que exista una pelicula asociada al id recibido
-            if (Id > 0 && Result != null)
+            if (Result != null)
             {
                 return true; //Si existe una pelicula asociada con ese id en la base de datos, entonces se retorna true para romper el bucle.
             }

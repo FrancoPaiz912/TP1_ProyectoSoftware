@@ -6,22 +6,21 @@ namespace Presentacion
 {
     public class Filtros
     {
-        private readonly IFiltrar _Filtrar;
+        private readonly IFiltrar Filtrar;
 
         public Filtros(IFiltrar Filtrar)
         {
-            _Filtrar = Filtrar;
+            this.Filtrar = Filtrar;
         }
 
         public async Task ComenzarFiltrado()
         {
             List<Cartelera> Funciones = new List<Cartelera>(); //Se usa para recibir las funciones en cartelera e imprimir los datos
-            Console.Clear();
             string Fecha;
-            bool Result;
-            bool Iterador = true; //Iterador que nos permitira realizar el bucle con el fin de que se ingresen todos los datos correctamente
-            while (Iterador)
+            bool Iterador;
+            do
             {
+                Iterador = false;
                 Console.Clear();
                 Console.WriteLine("Por favor, siga las siguientes indicaciones para filtrar funciones:  \n1.Para filtrar por Fecha \n2.Para filtrar por Pelicula \n3.Para filtrar por ambos \n");
                 switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine())) //Ingreso de opcion 
@@ -31,62 +30,48 @@ namespace Presentacion
                         do
                         {
                             Fecha = Console.ReadLine();
-                            Result = ValidacionFecha.VerificacionFecha(Fecha); //Llamamos a la clase estatica para comprobar que la fecha ingresada sea en el formato correcto
-                            if (!Result)
+                            Iterador = ValidacionFecha.VerificacionFecha(Fecha); //Llamamos a la clase estatica para comprobar que la fecha ingresada sea en el formato correcto
+                            if (Iterador)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Ingrese un formato adecuado (dd/mm)\n");
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                             }
-                        } while (Result);
-                        Funciones = await _Filtrar.SolicitarFiltrado(null, Fecha); //Se llama a capa de aplicacion, enviandole en este caso unicamente la fecha, para que realice el filtrado.
-                        Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
+                        } while (Iterador);
+                        Funciones = await Filtrar.SolicitarFiltrado(null, Fecha); //Se llama a capa de aplicacion, enviandole en este caso unicamente la fecha, para que realice el filtrado.
                         break;
                     case 2:
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
                         string? Titulo = Console.ReadLine().ToUpper(); //Ingresamos el titulo de la pelicula a filtrar
-                        Funciones = await _Filtrar.SolicitarFiltrado(Titulo, null); //Se llama a capa de aplicacion, enviandole en este caso unicamente el titulo de la pelicula, para que realice el filtrado.
-                        Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
+                        Funciones = await Filtrar.SolicitarFiltrado(Titulo, null); //Se llama a capa de aplicacion, enviandole en este caso unicamente el titulo de la pelicula, para que realice el filtrado.
                         break;
                     case 3:
-                        Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                         do
                         {
+                            Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                             Fecha = Console.ReadLine();
-                            Result = ValidacionFecha.VerificacionFecha(Fecha);
-                            if (!Result)
+                            Iterador = ValidacionFecha.VerificacionFecha(Fecha);
+                            if (Iterador)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Ingrese un formato adecuado (dd/mm)\n");
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                             }
-                        }while (Result);
+                        } while (Iterador);
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
                         string? Nombre_Pelicula = Console.ReadLine().ToUpper(); //Ingresamos el titulo de la pelicula a filtrar
-                        Funciones = await _Filtrar.SolicitarFiltrado(Nombre_Pelicula, Fecha); //Se llama a capa de aplicacion, enviandole en este caso tanto la fecha como el titulo de la pelicula, para que realice el filtrado.
-                        Iterador = false; //Se rompe el ciclo en caso de realizar correctamente el filtrado
-                        break;
-                    case 400: //Caso para el FormatException
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica \nOprima cualquier tecla para continuar");
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.ReadKey();
-                        break;
-                    case 409: //Caso para el OverflowException
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica valida \nOprima cualquier tecla para continuar");
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.ReadKey();
+                        Funciones = await Filtrar.SolicitarFiltrado(Nombre_Pelicula, Fecha); //Se llama a capa de aplicacion, enviandole en este caso tanto la fecha como el titulo de la pelicula, para que realice el filtrado.
                         break;
                     default: //Controlamos cualquier otro valor numerico no ofrecido como opcion que haya escogido el usuario
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Opcion numerica no valida, por favor ingrese un valor acorde a las opciones ofrecidas \nOprima cualquier tecla para continuar"); //Arreglar que pasa cuando no se mete un numerico correcto
+                        Console.WriteLine("\nOpcion no valida, por favor ingrese un valor numerico acorde a las opciones ofrecidas \n\nOprima cualquier tecla para continuar \n"); //Arreglar que pasa cuando no se mete un numerico correcto
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.ReadKey();
+                        Iterador = true;
                         break;
                 }
-            }
-            Console.Clear();
+            } while (Iterador);
+            Console.Clear(); //Puedo hacer una clase para imprimir¿?
             if (Funciones.Count() == 0) //Si la lista de funciones filtradas no tiene coincidencias se traduce a que no existen funciones encontradas acorde a las busquedas. 
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -97,10 +82,10 @@ namespace Presentacion
             {
                 foreach (var func in Funciones)
                 {
-                    Console.WriteLine("Pelicula: " + func.Titulo + "\n" + "Genero: " + func.Genero + "\n" + "Poster: " + func.Poster + "\n" + "Sinopsis: " + func.Sinopsis + "\n" + "Trailer: " + func.Trailer + "\n" + "Fecha: " + func.Fecha.Date.ToShortDateString() + "\n" + "Hora: " + func.Horario.ToString() + "\n" + "Sala: " + func.Sala + "\n" + "Capacidad: " + func.Capacidad + "\n");
+                    Console.WriteLine("\nPelicula: " + func.Titulo + "\nGenero: " + func.Genero + "\nSinopsis: " + func.Sinopsis + "\nFecha: " + func.Fecha.Date.ToShortDateString() + "\nHora: " + func.Horario.ToString() + "\nSala: " + func.Sala + "\nCapacidad: " + func.Capacidad);
                 }
             }
-            Console.WriteLine("Oprima cualquier tecla para continuar");
+            Console.WriteLine("\nOprima cualquier tecla para continuar");
             Console.ReadKey();
         }
     }

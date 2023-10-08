@@ -15,10 +15,10 @@ class Program
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.BackgroundColor = ConsoleColor.DarkBlue;
         Console.Clear();//Para que muestre adecuadamente el color de fondo
-        
-        while (await Menu(Querys,Inserts))//Llamada al menu de opciones
+
+        while (await Menu(Querys, Inserts))//Llamada al menu de opciones
         {
-            Console.Clear(); 
+            Console.Clear();
         }
     }
 
@@ -27,15 +27,14 @@ class Program
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("*----------------------------------------------------------------*");
         Console.WriteLine("|                                                                |");
-        Console.WriteLine("|                                                                |");
-        Console.WriteLine("|                                                                |");
-        Console.WriteLine("|                   Bienvenido al Cine Rocket                    |");
-        Console.WriteLine("|                                                                |");
-        Console.WriteLine("|                                                                |");
+        Console.WriteLine("|                  Bienvenido al Cine Rocket                     |");
+        Console.WriteLine("|                    1. Listar funciones                         |");
+        Console.WriteLine("|                    2. Registrar funcion                        |");
+        Console.WriteLine("|                    3. Salir del programa                       |");
         Console.WriteLine("|                                                                |");
         Console.WriteLine("*----------------------------------------------------------------*");
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("\nPor favor escoja que desea hacer ingresando el numero correspondiente: \n1. Listar funciones \n2. Registrar funcion \n3. Salir del programa \n");
+        Console.WriteLine("Por favor, escoga una opcion:");
         switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine()))
         {
             case 1:
@@ -45,28 +44,17 @@ class Program
             case 2:
                 AgregarFuncion AgregarFuncion = new AgregarFuncion(new RegistrarFuncion(Inserts), new ListarFunciones(Querys), new ValidacionID(Querys));
                 await AgregarFuncion.RecopilarDatos(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva funciun
-                Console.WriteLine("Funcion programada con exito. \nOprima cualquier tecla para continuar");
-                Console.ReadKey();
+                Console.WriteLine("Funcion programada con exito. \n\nOprima cualquier tecla para continuar");
                 break;
             case 3:
-                Console.WriteLine("Gracias por elegirnos, que tenga buen día <3. \n");
+                Console.WriteLine("Gracias por elegirnos, que tenga buen día <3. \n\n");
                 return false; //Al finalizar el programa, no es necesario incluir un break.
-            case 400: //Caso para el FormatException
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica \nOprima cualquier tecla para continuar");
-                Console.ReadKey();
-                break;
-            case 409: //Caso para el OverflowException
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Opcion incorrecta, Ingrese una opcion numerica valida \nOprima cualquier tecla para continuar");
-                Console.ReadKey();
-                break;
             default: //Controlamos cualquier otro valor númerico no ofrecido como opción que haya escogido el usuario
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Opcion incorrecta, escoga una de las opciones brindadas por el sistema. \nOprima cualquier tecla para continuar");
-                Console.ReadKey();
+                Console.WriteLine("Opcion incorrecta, escoga uno de los valores numericos correspondiente a las opciones brindadas por el sistema.\n\nOprima cualquier tecla para continuar");
                 break;
         }
+        Console.ReadKey();
         return true;
     }
 }
