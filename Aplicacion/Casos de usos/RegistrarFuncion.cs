@@ -14,7 +14,7 @@ namespace Aplicacion.Casos_de_usos
 
         void IAgregarFunciones.RegistrarFuncion(int IdPelicula, int IdSala, DateTime Fecha, TimeSpan Horario)
         {
-            _Agregar.AlmacenarFuncion(new Funciones //Se crea la nueva funcion con los datos ya validados, y se envía a infraestructura.
+            _Agregar.AlmacenarFuncion(new Funciones 
             {
                 PeliculaId = IdPelicula,
                 SalaId = IdSala,

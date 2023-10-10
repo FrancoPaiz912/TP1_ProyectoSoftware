@@ -2,7 +2,7 @@
 
 namespace Aplicacion.Interfaces.Aplicacion
 {
-    public interface IListarFunciones
+    public interface IGetInformacion
     {
         Task<List<Peliculas>> ListarPeliculas();
         Task<List<Salas>> ListarSalas();

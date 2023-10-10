@@ -14,9 +14,9 @@ class Program
         IAgregar Inserts = new InsertarFuncion(new Contexto_Cine());
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.BackgroundColor = ConsoleColor.DarkBlue;
-        Console.Clear();//Para que muestre adecuadamente el color de fondo
+        Console.Clear();
 
-        while (await Menu(Querys, Inserts))//Llamada al menu de opciones
+        while (await Menu(Querys, Inserts))
         {
             Console.Clear();
         }
@@ -39,17 +39,17 @@ class Program
         {
             case 1:
                 Filtros IniciarFiltrado = new Filtros(new Filtrar(Querys));
-                await IniciarFiltrado.ComenzarFiltrado(); //Llamamos a la clase filtrar, la cual pedira los datos necesarios para realizar el filtrado
+                await IniciarFiltrado.ComenzarFiltrado(); 
                 break;
             case 2:
-                AgregarFuncion AgregarFuncion = new AgregarFuncion(new RegistrarFuncion(Inserts), new ListarFunciones(Querys), new ValidacionID(Querys));
-                await AgregarFuncion.RecopilarDatos(); //LLamamos a la clase agregar la cual pedirá los datos necesarios para agregar una nueva funciun
+                AgregarFuncion AgregarFuncion = new AgregarFuncion(new RegistrarFuncion(Inserts), new GetInformacion(Querys), new ValidacionID(Querys));
+                await AgregarFuncion.RecopilarDatos();
                 Console.WriteLine("Funcion programada con exito. \n\nOprima cualquier tecla para continuar");
                 break;
             case 3:
                 Console.WriteLine("Gracias por elegirnos, que tenga buen día <3. \n\n");
-                return false; //Al finalizar el programa, no es necesario incluir un break.
-            default: //Controlamos cualquier otro valor númerico no ofrecido como opción que haya escogido el usuario
+                return false; 
+            default: 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Opcion incorrecta, escoga uno de los valores numericos correspondiente a las opciones brindadas por el sistema.\n\nOprima cualquier tecla para continuar");
                 break;

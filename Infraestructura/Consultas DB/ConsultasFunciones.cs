@@ -14,14 +14,14 @@ namespace Infraestructura.Querys
             _Contexto = Context;
         }
 
-        async Task<List<Funciones>> IConsultas.Filtrar(string? Titulo, string? Fecha) //Se retornan las funciones con las tablas relacionadas acorde a los filtros aplicados
+        async Task<List<Funciones>> IConsultas.Filtrar(string? Titulo, string? Fecha) 
         {
             return await _Contexto.Funciones.Include(s => s.Tickets)
                 .Include(s => s.Salas)
                 .Include(s => s.Peliculas)
                 .ThenInclude(s => s.Generos)
                 .Where(s => (Titulo != null ? (s.Peliculas.Titulo.Contains(Titulo)) : true) && (Fecha != null ? (s.Fecha == DateTime.Parse(Fecha)) : true)).ToListAsync();
-        } //Se utilizan condicionales ternarios para optimizar la busqueda.
+        } 
 
         async Task<Peliculas?> IConsultas.GetPeliculaById(int Id)
         {
@@ -36,12 +36,12 @@ namespace Infraestructura.Querys
 
         async Task<List<Peliculas>> IConsultas.GetPeliculas()
         {
-            return await _Contexto.Peliculas.ToListAsync(); //Retorna la lista de peliculas asociadas
+            return await _Contexto.Peliculas.ToListAsync(); 
         }
 
         async Task<List<Salas>> IConsultas.GetSalas()
         {
-            return await _Contexto.Salas.ToListAsync(); //Retorna la lista de salas asociadas
+            return await _Contexto.Salas.ToListAsync(); 
         }
     }
 }

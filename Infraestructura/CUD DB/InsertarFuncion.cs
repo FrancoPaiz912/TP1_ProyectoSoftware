@@ -13,7 +13,7 @@ namespace Infraestructura.Inserts
             _Contexto = Contexto;
         }
 
-        void IAgregar.AlmacenarFuncion(Funciones Funcion) //Recibe una funcion y la registra en la base de datos
+        void IAgregar.AlmacenarFuncion(Funciones Funcion) 
         {
             _Contexto.Add(Funcion);
             _Contexto.SaveChanges();
