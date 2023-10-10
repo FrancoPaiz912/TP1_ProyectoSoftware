@@ -16,9 +16,9 @@ namespace Presentacion
             }
             else
             {
-                foreach (var func in Funciones)
+                foreach (var Func in Funciones)
                 {
-                    Console.WriteLine("\nPelicula: " + func.Titulo + "\nGenero: " + func.Genero + "\nSinopsis: " + func.Sinopsis + "\nFecha: " + func.Fecha.Date.ToShortDateString() + "\nHora: " + func.Horario.ToString() + "\nSala: " + func.Sala + "\nCapacidad: " + func.Capacidad);
+                    Console.WriteLine("\nPelicula: " + Func.Titulo + "\nGenero: " + Func.Genero + "\nSinopsis: " + Func.Sinopsis + "\nFecha: " + Func.Fecha.Date.ToShortDateString() + "\nHora: " + Func.Horario.ToString() + "\nSala: " + Func.Sala + "\nCapacidad: " + Func.Capacidad);
                 }
             }
         }

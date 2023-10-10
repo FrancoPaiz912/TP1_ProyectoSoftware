@@ -42,7 +42,7 @@ namespace Presentacion
                         break;
                     case 2:
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
-                        string? Titulo = Console.ReadLine().ToUpper();
+                        string Titulo = Console.ReadLine().ToUpper();
                         Funciones = await FuncionesService.SolicitarFiltrado(Titulo, null);
                         break;
                     case 3:
@@ -59,7 +59,7 @@ namespace Presentacion
                             }
                         } while (Iterador);
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
-                        string? Nombre_Pelicula = Console.ReadLine().ToUpper();
+                        string Nombre_Pelicula = Console.ReadLine().ToUpper();
                         Funciones = await FuncionesService.SolicitarFiltrado(Nombre_Pelicula, Fecha);
                         break;
                     default:

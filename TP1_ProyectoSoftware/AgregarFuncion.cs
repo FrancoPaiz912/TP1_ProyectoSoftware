@@ -8,7 +8,6 @@ namespace Presentacion
         private readonly IFuncionService FuncionService;
         private readonly IPeliculasService PeliculasService;
         private readonly ISalasService SalasService;
-        //        private readonly IValidacionID ValidadorID;
 
         public AgregarFuncion(IFuncionService FuncionService, IPeliculasService PeliculasService, ISalasService SalasService)
         {
