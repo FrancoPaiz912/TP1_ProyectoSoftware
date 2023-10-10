@@ -10,13 +10,13 @@
             }
             catch (FormatException)
             {
-                return -1;  
+                return -1;
             }
             catch (OverflowException)
             {
                 return -1;
             }
-            return int.Parse(Valor); 
+            return int.Parse(Valor);
         }
     }
 }

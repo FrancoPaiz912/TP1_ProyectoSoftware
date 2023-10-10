@@ -8,21 +8,21 @@ namespace Aplicacion.Validaciones
         {
             try
             {
-                DateTime Hora = DateTime.Parse(Horario); 
-                if (Hora.Day != DateTime.Now.Day) 
+                DateTime Hora = DateTime.Parse(Horario);
+                if (Hora.Day != DateTime.Now.Day)
                 {
                     throw new HorarioException("");
-                }                                  
+                }
             }
-            catch (FormatException) 
+            catch (FormatException)
             {
-                return true; 
+                return true;
             }
-            catch (HorarioException) 
+            catch (HorarioException)
             {
-                return true; 
+                return true;
             }
-            return false; 
+            return false;
         }
     }
 }

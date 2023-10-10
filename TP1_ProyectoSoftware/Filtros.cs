@@ -6,16 +6,16 @@ namespace Presentacion
 {
     public class Filtros
     {
-        private readonly IFiltrar Filtrar;
+        private readonly IFuncionService FuncionesService;
 
-        public Filtros(IFiltrar Filtrar)
+        public Filtros(IFuncionService FuncionesService)
         {
-            this.Filtrar = Filtrar;
+            this.FuncionesService = FuncionesService;
         }
 
         public async Task ComenzarFiltrado()
         {
-            List<Cartelera> Funciones = new List<Cartelera>(); 
+            List<Cartelera> Funciones = new List<Cartelera>();
             string Fecha;
             bool Iterador;
             do
@@ -23,14 +23,14 @@ namespace Presentacion
                 Iterador = false;
                 Console.Clear();
                 Console.WriteLine("Por favor, siga las siguientes indicaciones para filtrar funciones:  \n1.Para filtrar por Fecha \n2.Para filtrar por Pelicula \n3.Para filtrar por ambos \n");
-                switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine())) 
+                switch (ValidacionNumerica.ComprobarParseo(Console.ReadLine()))
                 {
                     case 1:
                         Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                         do
                         {
                             Fecha = Console.ReadLine();
-                            Iterador = ValidacionFecha.VerificacionFecha(Fecha); 
+                            Iterador = ValidacionFecha.VerificacionFecha(Fecha);
                             if (Iterador)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -38,12 +38,12 @@ namespace Presentacion
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                             }
                         } while (Iterador);
-                        Funciones = await Filtrar.SolicitarFiltrado(null, Fecha);
+                        Funciones = await FuncionesService.SolicitarFiltrado(null, Fecha);
                         break;
                     case 2:
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
-                        string? Titulo = Console.ReadLine().ToUpper(); 
-                        Funciones = await Filtrar.SolicitarFiltrado(Titulo, null); 
+                        string? Titulo = Console.ReadLine().ToUpper();
+                        Funciones = await FuncionesService.SolicitarFiltrado(Titulo, null);
                         break;
                     case 3:
                         do
@@ -59,10 +59,10 @@ namespace Presentacion
                             }
                         } while (Iterador);
                         Console.WriteLine("Por favor, ingrese el titulo de la pelicula");
-                        string? Nombre_Pelicula = Console.ReadLine().ToUpper(); 
-                        Funciones = await Filtrar.SolicitarFiltrado(Nombre_Pelicula, Fecha); 
+                        string? Nombre_Pelicula = Console.ReadLine().ToUpper();
+                        Funciones = await FuncionesService.SolicitarFiltrado(Nombre_Pelicula, Fecha);
                         break;
-                    default: 
+                    default:
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nOpcion no valida, por favor ingrese un valor numerico acorde a las opciones ofrecidas \n\nOprima cualquier tecla para continuar \n"); //Arreglar que pasa cuando no se mete un numerico correcto
                         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -71,21 +71,7 @@ namespace Presentacion
                         break;
                 }
             } while (Iterador);
-            Console.Clear(); 
-
-            if (Funciones.Count() == 0)  
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Lo sentimos, no hay funciones registradas que coincidan con la busqueda :(  \n");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-            }
-            else 
-            {
-                foreach (var func in Funciones)
-                {
-                    Console.WriteLine("\nPelicula: " + func.Titulo + "\nGenero: " + func.Genero + "\nSinopsis: " + func.Sinopsis + "\nFecha: " + func.Fecha.Date.ToShortDateString() + "\nHora: " + func.Horario.ToString() + "\nSala: " + func.Sala + "\nCapacidad: " + func.Capacidad);
-                }
-            }
+            ImprimirDatos.ImprimirCartelera(Funciones);
             Console.WriteLine("\nOprima cualquier tecla para continuar");
             Console.ReadKey();
         }

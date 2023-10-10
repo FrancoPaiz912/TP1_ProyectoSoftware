@@ -1,10 +1,10 @@
-﻿using Aplicación.Interfaces.Infraestructura;
+﻿using Aplicacion.Interfaces.Infraestructura.CUD;
 using Dominio;
 using Infraestructura.EstructuraDB;
 
 namespace Infraestructura.Inserts
 {
-    public class InsertarFuncion : IAgregar
+    public class InsertarFuncion : IAgregarFuncion
     {
         private readonly Contexto_Cine _Contexto;
 
@@ -13,7 +13,7 @@ namespace Infraestructura.Inserts
             _Contexto = Contexto;
         }
 
-        void IAgregar.AlmacenarFuncion(Funciones Funcion) 
+        void IAgregarFuncion.AlmacenarFuncion(Funciones Funcion)
         {
             _Contexto.Add(Funcion);
             _Contexto.SaveChanges();

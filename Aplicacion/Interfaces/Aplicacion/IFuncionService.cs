@@ -2,8 +2,10 @@
 
 namespace Aplicacion.Interfaces.Aplicacion
 {
-    public interface IFiltrar
+    public interface IFuncionService
     {
+        void RegistrarFuncion(int IdPelicula, int IdSala, DateTime Fecha, TimeSpan Horario);
+
         Task<List<Cartelera>> SolicitarFiltrado(string? Titulo, string? Fecha);
     }
 }

@@ -4,25 +4,25 @@ namespace Aplicacion.Validaciones
 {
     public static class ValidacionFecha
     {
-        public static bool VerificacionFecha(string Fecha) 
+        public static bool VerificacionFecha(string Fecha)
         {
             try
             {
-                DateTime Tiempo = DateTime.Parse(Fecha); 
-                if (Tiempo.TimeOfDay != DateTime.Parse("00:00:00").TimeOfDay) 
+                DateTime Tiempo = DateTime.Parse(Fecha);
+                if (Tiempo.TimeOfDay != DateTime.Parse("00:00:00").TimeOfDay)
                 {
-                    throw new FechaException(""); 
-                }                                 
+                    throw new FechaException("");
+                }
             }
-            catch (FormatException) 
+            catch (FormatException)
             {
-                return true; 
+                return true;
             }
-            catch (FechaException) 
+            catch (FechaException)
             {
-                return true; 
+                return true;
             }
-            return false; 
+            return false;
         }
     }
 }
