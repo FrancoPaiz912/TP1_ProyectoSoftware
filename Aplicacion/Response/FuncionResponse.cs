@@ -1,6 +1,6 @@
 ﻿namespace Aplicacion.DTO
 {
-    public class Cartelera
+    public class FuncionResponse
     {
         public string Titulo { get; set; }
         public string Sinopsis { get; set; }

@@ -15,7 +15,7 @@ namespace Presentacion
 
         public async Task ComenzarFiltrado()
         {
-            List<Cartelera> Funciones = new List<Cartelera>();
+            List<FuncionResponse> Funciones = new List<FuncionResponse>();
             string Fecha;
             bool Iterador;
             do

@@ -6,6 +6,6 @@ namespace Aplicacion.Interfaces.Aplicacion
     {
         void RegistrarFuncion(int IdPelicula, int IdSala, DateTime Fecha, TimeSpan Horario);
 
-        Task<List<Cartelera>> SolicitarFiltrado(string? Titulo, string? Fecha);
+        Task<List<FuncionResponse>> SolicitarFiltrado(string? Titulo, string? Fecha);
     }
 }

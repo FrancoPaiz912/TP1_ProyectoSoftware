@@ -4,6 +4,6 @@ namespace Aplicacion.Interfaces.Aplicacion
 {
     public interface IFiltrar
     {
-        Task<List<Cartelera>> SolicitarFiltrado(string? Titulo, string? Fecha);
+        Task<List<FuncionResponse>> SolicitarFiltrado(string? Titulo, string? Fecha);
     }
 }

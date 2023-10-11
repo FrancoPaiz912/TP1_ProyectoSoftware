@@ -27,12 +27,12 @@ namespace Aplicacion.Casos_de_usos
             });
         }
 
-        async Task<List<Cartelera>> IFuncionService.SolicitarFiltrado(string? Titulo = null, string? Fecha = null)
+        async Task<List<FuncionResponse>> IFuncionService.SolicitarFiltrado(string? Titulo = null, string? Fecha = null)
         {
-            List<Cartelera> Funciones = new List<Cartelera>();
+            List<FuncionResponse> Funciones = new List<FuncionResponse>();
             foreach (var Item in await ConsultarFuncion.Filtrar(Titulo, Fecha))
             {
-                Funciones.Add(new Cartelera
+                Funciones.Add(new FuncionResponse
                 {
                     Titulo = Item.Peliculas.Titulo,
                     Sinopsis = Item.Peliculas.Sinopsis,
