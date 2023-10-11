@@ -16,7 +16,7 @@ namespace Infraestructura.Consultas_DB
 
         async Task<Peliculas?> IConsultasPeliculas.GetPeliculaById(int Id)
         {
-            return await _Contexto.Peliculas.FirstOrDefaultAsync(s => s.Peliculasid == Id);
+            return await _Contexto.Peliculas.FirstOrDefaultAsync(s => s.Peliculaid == Id);
         }
 
         async Task<List<Peliculas>> IConsultasPeliculas.GetPeliculas()

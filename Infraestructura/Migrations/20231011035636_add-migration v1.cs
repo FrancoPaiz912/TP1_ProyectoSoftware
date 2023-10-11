@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,22 +8,22 @@
 namespace Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class addmigrationv1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Genero",
+                name: "Generos",
                 columns: table => new
                 {
-                    GenerosId = table.Column<int>(type: "int", nullable: false)
+                    GeneroId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genero", x => x.GenerosId);
+                    table.PrimaryKey("PK_Generos", x => x.GeneroId);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,7 +44,7 @@ namespace Infraestructura.Migrations
                 name: "Peliculas",
                 columns: table => new
                 {
-                    Peliculasid = table.Column<int>(type: "int", nullable: false)
+                    Peliculaid = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Sinopsis = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -53,12 +54,12 @@ namespace Infraestructura.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Peliculas", x => x.Peliculasid);
+                    table.PrimaryKey("PK_Peliculas", x => x.Peliculaid);
                     table.ForeignKey(
-                        name: "FK_Peliculas_Genero_Genero",
+                        name: "FK_Peliculas_Generos_Genero",
                         column: x => x.Genero,
-                        principalTable: "Genero",
-                        principalColumn: "GenerosId",
+                        principalTable: "Generos",
+                        principalColumn: "GeneroId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -80,7 +81,7 @@ namespace Infraestructura.Migrations
                         name: "FK_Funciones_Peliculas_PeliculaId",
                         column: x => x.PeliculaId,
                         principalTable: "Peliculas",
-                        principalColumn: "Peliculasid",
+                        principalColumn: "Peliculaid",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Funciones_Salas_SalaId",
@@ -94,13 +95,13 @@ namespace Infraestructura.Migrations
                 name: "Tickets",
                 columns: table => new
                 {
-                    TicketsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FuncionId = table.Column<int>(type: "int", nullable: false),
                     Usuario = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tickets", x => new { x.TicketsId, x.FuncionId });
+                    table.PrimaryKey("PK_Tickets", x => new { x.TicketId, x.FuncionId });
                     table.ForeignKey(
                         name: "FK_Tickets_Funciones_FuncionId",
                         column: x => x.FuncionId,
@@ -110,8 +111,8 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Genero",
-                columns: new[] { "GenerosId", "Nombre" },
+                table: "Generos",
+                columns: new[] { "GeneroId", "Nombre" },
                 values: new object[,]
                 {
                     { 1, "Acción" },
@@ -138,7 +139,7 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.InsertData(
                 table: "Peliculas",
-                columns: new[] { "Peliculasid", "Genero", "Poster", "Sinopsis", "Titulo", "Trailer" },
+                columns: new[] { "Peliculaid", "Genero", "Poster", "Sinopsis", "Titulo", "Trailer" },
                 values: new object[,]
                 {
                     { 1, 2, "https://sm.ign.com/t/ign_es/screenshot/default/d0n-cinv4aahikr_mmkj.960.jpg", "Tras el asesinato de su padre, Simba, un joven león es apartado su reino y tendrá que descubrir con ayuda de amigos de la sabana africana el significado de la responsabilidad y la valentía. Más tarde volverá para recuperar el control de su reino.", "EL REY LEÓN", "https://www.youtube.com/watch?v=0U-kFH-ixV0&ab_channel=DubZone%3ALatinoam%C3%A9rica" },
@@ -184,9 +185,9 @@ namespace Infraestructura.Migrations
                 column: "FuncionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_TicketsId",
+                name: "IX_Tickets_TicketId",
                 table: "Tickets",
-                column: "TicketsId",
+                column: "TicketId",
                 unique: true);
         }
 
@@ -206,7 +207,7 @@ namespace Infraestructura.Migrations
                 name: "Salas");
 
             migrationBuilder.DropTable(
-                name: "Genero");
+                name: "Generos");
         }
     }
 }

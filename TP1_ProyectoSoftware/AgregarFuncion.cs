@@ -26,7 +26,7 @@ namespace Presentacion
             Console.WriteLine("Por favor escoja la funcion a añadir de acuerdo a los siguientes parametros: \nID de Pelicula \n");
             foreach (var Peli in await PeliculasService.ListarPeliculas())
             {
-                Console.WriteLine("ID: " + Peli.Peliculasid + "         - Titulo de la Pelicula: " + Peli.Titulo);
+                Console.WriteLine("ID: " + Peli.Peliculaid + "         - Titulo de la Pelicula: " + Peli.Titulo);
             };
             Console.WriteLine("\n\nPor favor escoga entre los id presentados previamente");
             do
