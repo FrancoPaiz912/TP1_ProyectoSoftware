@@ -71,7 +71,21 @@ namespace Presentacion
                         break;
                 }
             } while (Iterador);
-            ImprimirDatos.ImprimirCartelera(Funciones);
+            Console.Clear();
+            if (Funciones.Count() == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Lo sentimos, no hay funciones registradas que coincidan con la busqueda :(  \n");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+
+            else
+            {
+                foreach (var Func in Funciones)
+                {
+                    Console.WriteLine("\nPelicula: " + Func.Titulo + "\nGenero: " + Func.Genero + "\nSinopsis: " + Func.Sinopsis + "\nFecha: " + Func.Fecha.Date.ToShortDateString() + "\nHora: " + Func.Horario.ToString() + "\nSala: " + Func.Sala + "\nCapacidad: " + Func.Capacidad);
+                }
+            }
             Console.WriteLine("\nOprima cualquier tecla para continuar");
             Console.ReadKey();
         }

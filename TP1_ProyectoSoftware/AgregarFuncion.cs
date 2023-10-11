@@ -1,5 +1,6 @@
 ﻿using Aplicacion.Interfaces.Aplicacion;
 using Aplicacion.Validaciones;
+using Dominio;
 
 namespace Presentacion
 {
@@ -23,7 +24,10 @@ namespace Presentacion
             bool Result = true;
             Console.Clear();
             Console.WriteLine("Por favor escoja la funcion a añadir de acuerdo a los siguientes parametros: \nID de Pelicula \n");
-            ImprimirDatos.ImprimirPeliculas(await PeliculasService.ListarPeliculas());
+            foreach (var Peli in await PeliculasService.ListarPeliculas())
+            {
+                Console.WriteLine("ID: " + Peli.Peliculasid + "         - Titulo de la Pelicula: " + Peli.Titulo);
+            };
             do
             {
                 Console.WriteLine("\nPor favor escoga entre los id presentados previamente");
@@ -38,7 +42,10 @@ namespace Presentacion
             } while (Result);
             Console.Clear();
             Console.WriteLine("ID de la sala \n");
-            ImprimirDatos.ImprimirSalas(await SalasService.ListarSalas());
+            foreach (var Sala in await SalasService.ListarSalas())
+            {
+                Console.WriteLine("ID:" + Sala.SalaId + "    - Nombre de la sala: " + Sala.Nombre + "            - Capacidad: " + Sala.Capacidad);
+            }
             do
             {
                 Console.WriteLine("Por favor escoga entre los id presentados previamente");
