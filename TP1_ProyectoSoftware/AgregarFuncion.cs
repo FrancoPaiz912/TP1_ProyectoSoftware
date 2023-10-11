@@ -28,9 +28,9 @@ namespace Presentacion
             {
                 Console.WriteLine("ID: " + Peli.Peliculasid + "         - Titulo de la Pelicula: " + Peli.Titulo);
             };
+            Console.WriteLine("\n\nPor favor escoga entre los id presentados previamente");
             do
             {
-                Console.WriteLine("\nPor favor escoga entre los id presentados previamente");
                 IdPeli = ValidacionNumerica.ComprobarParseo(Console.ReadLine());
                 if (IdPeli < 0 || !await PeliculasService.ComprobarPeliculaId(IdPeli))
                 {
@@ -46,9 +46,9 @@ namespace Presentacion
             {
                 Console.WriteLine("ID:" + Sala.SalaId + "    - Nombre de la sala: " + Sala.Nombre + "            - Capacidad: " + Sala.Capacidad);
             }
+            Console.WriteLine("\n\nPor favor escoga entre los id presentados previamente");
             do
             {
-                Console.WriteLine("Por favor escoga entre los id presentados previamente");
                 IdSala = ValidacionNumerica.ComprobarParseo(Console.ReadLine());
                 if (IdSala < 0 || !await SalasService.ComprobarSalaId(IdSala))
                 {

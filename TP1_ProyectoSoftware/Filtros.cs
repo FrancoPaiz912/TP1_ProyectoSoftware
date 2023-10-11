@@ -46,9 +46,9 @@ namespace Presentacion
                         Funciones = await FuncionesService.SolicitarFiltrado(Titulo, null);
                         break;
                     case 3:
+                        Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                         do
                         {
-                            Console.WriteLine("Por favor, ingrese la fecha con formato dd/mm");
                             Fecha = Console.ReadLine();
                             Iterador = ValidacionFecha.VerificacionFecha(Fecha);
                             if (Iterador)
